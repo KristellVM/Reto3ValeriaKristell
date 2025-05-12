@@ -2,6 +2,8 @@ package main;
 
 import java.util.Scanner;
 
+import clases.Categoria;
+import dao.CategoriaDAO;
 import util.Funciones;
 
 public class Main1 {
@@ -14,7 +16,7 @@ public class Main1 {
 			opcion = Funciones.dimeEntero("Elige una opcion: 0-Salir 1-GestionCategorias:, 2-GestionProductos 3-GestionClientes ", sc);
 			switch (opcion) {
 			case 1:
-				//GestionCategorias();
+				gestionCategorias(sc);
 				break;
 
 			case 2:
@@ -30,6 +32,13 @@ public class Main1 {
 			}
 		} while (opcion != 0);
 
+	}
+	
+	public static void gestionCategorias(Scanner sc) {
+		int idCategoria=Funciones.dimeEntero("Introduce idCategoria: ", sc);
+		String nombre=Funciones.dimeString("Introduce nombre de categoria nueva: ", sc);
+		Categoria c = new Categoria(idCategoria, nombre);
+		CategoriaDAO.inserta(c);
 	}
 
 }

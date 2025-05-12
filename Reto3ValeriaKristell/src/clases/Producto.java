@@ -9,7 +9,20 @@ public class Producto {
 	private String color;
 	private String talla;
 	private int stock;
-	
+
+	public Producto(int idProducto, Categoria categoria, String nombre, double precio, String descripcion, String color,
+			String talla, int stock) {
+		super();
+		this.idProducto = idProducto;
+		this.categoria = categoria;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.descripcion = descripcion;
+		this.color = color;
+		this.talla = talla;
+		this.stock = stock;
+	}
+
 	public int getIdProducto() {
 		return idProducto;
 	}

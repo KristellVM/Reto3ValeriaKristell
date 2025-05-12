@@ -3,7 +3,10 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import clases.Categoria;
 import clases.Producto;
 import util.Conexion;
 
@@ -23,8 +26,12 @@ public class ProductoDAO {
 			ResultSet rs = pst.executeQuery();
 			while(rs.next())
 			{
-				Producto producto=new Producto();
-				lista.add(new AlumnoCurso(new Alumno(rs.getString("nombre"),rs.getString("apellidos")),rs.getDouble("notamedia")));
+			Categoria categoria =new Categoria(rs.getInt("idcategoria"),rs.getString("nombre"));//int idcategoria, String nombre
+			Producto producto=new Producto(rs.getInt("idProducto"),categoria,rs.getString("nombre"),
+					rs.getDouble("precio"),rs.getString("descripcion"),rs.getString("color"),rs.getString("talla"),
+					rs.getInt("stock"));
+
+			listaProductos.add(producto);
 			}
 			rs.close();
 		} catch (Exception e) {
@@ -33,6 +40,6 @@ public class ProductoDAO {
 		finally {
 			Conexion.cierraConexion();
 		}
-		return lista;
+		return listaProductos;
 	}
 }
