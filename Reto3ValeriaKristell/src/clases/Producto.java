@@ -9,6 +9,7 @@ public class Producto {
 	private String color;
 	private String talla;
 	private int stock;
+	
 	public int getIdProducto() {
 		return idProducto;
 	}
