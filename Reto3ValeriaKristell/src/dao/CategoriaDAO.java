@@ -22,6 +22,7 @@ public class CategoriaDAO {
 			if(rs.next()) {
 			}
 			
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
