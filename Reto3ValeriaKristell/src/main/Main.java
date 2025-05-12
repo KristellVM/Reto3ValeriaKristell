@@ -11,7 +11,13 @@ public class Main {
 		int opcion;
 		
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion:0-Salir 1-Mantenimiento, 2-Catalogo de productos 3-Pedidos 4-Informes", sc);
+			opcion = Funciones.dimeEntero("Elige una opcion:", sc);
+			System.out.println("0-Salir");
+			System.out.println(" 1-Mantenimiento");
+			System.out.println("2-Catalogo de productos");
+			System.out.println(" 3-Pedidos");
+			System.out.println(" 4-Informes");
+			
 			switch (opcion) {
 			case 1:
 				//FuncionMantenimientos();
