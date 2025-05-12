@@ -4,29 +4,25 @@ import java.util.Scanner;
 
 import util.Funciones;
 
-public class Main {
+public class Main1 {
 
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		int opcion;
 		
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion:0-Salir 1-Mantenimiento, 2-Catalogo de productos 3-Pedidos 4-Informes", sc);
+			opcion = Funciones.dimeEntero("Elige una opcion: 0-Salir 1-GestionCategorias:, 2-GestionProductos 3-GestionClientes ", sc);
 			switch (opcion) {
 			case 1:
-				//FuncionMantenimientos();
+				//GestionCategorias();
 				break;
 
 			case 2:
-				//FuncionCatalogoProductos();
+				//GestionProductos();
 				break;
 
 			case 3:
-				//FuncionPedidos():
-				break;
-
-			case 4:
-				//FuncionInformes();				
+				//GestionClientes():
 				break;
 
 			default:
@@ -35,10 +31,5 @@ public class Main {
 		} while (opcion != 0);
 
 	}
-	
-	
-	
-	
-	
-	
+
 }
