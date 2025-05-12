@@ -18,6 +18,7 @@ public class CategoriaDAO {
 			pst.setInt(1, categoria.getIdcategoria());
 			pst.setString(2, categoria.getNombre());
 			pst.execute();
+			
 			ResultSet rs = pst.getGeneratedKeys();
 			if(rs.next()) {
 			}
