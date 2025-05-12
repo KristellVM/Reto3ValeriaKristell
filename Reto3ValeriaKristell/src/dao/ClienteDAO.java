@@ -31,4 +31,24 @@ public class ClienteDAO {
 				Conexion.cierraConexion();
 			}
 	}
+	
+	public static Cliente buscar(int codigo) {
+		try {
+			//abro conexion
+			Connection con=Conexion.abreConexion();
+			//creo select
+			PreparedStatement pst=con.prepareStatement("select * from clientes where codigo=?;");
+			pst.setInt(1, codigo);
+			ResultSet rs = pst.getGeneratedKeys();
+			pst.execute();
+			if(rs.next()) {
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {//O en el try abrir la conexion
+				Conexion.cierraConexion();
+			}
+		return null;
+	}
 }

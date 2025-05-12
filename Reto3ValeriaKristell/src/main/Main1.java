@@ -39,5 +39,10 @@ public class Main1 {
 		Categoria c = new Categoria(nombre);
 		CategoriaDAO.inserta(c);
 	}
+	
+	public static boolean gestionClientes(Scanner sc) {
+		
+		return false;
+	}
 
 }
