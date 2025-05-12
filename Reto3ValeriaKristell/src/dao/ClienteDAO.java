@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import clases.Categoria;
 import clases.Cliente;
@@ -13,12 +15,15 @@ public class ClienteDAO {
 			//abro conexion
 			Connection con=Conexion.abreConexion();
 			//creo select
-			PreparedStatement pst=con.prepareStatement("INSERT into clientes(idcliente, nombre, direccion, codigo) values(?,?,?,?);");
-			pst.setInt(1, cliente.getIdcliente());
-			pst.setString(2, cliente.getNombre());
-			pst.setString(3, cliente.getDireccion());
-			pst.setInt(4, cliente.getCodigo());
+			PreparedStatement pst=con.prepareStatement("INSERT into clientes(nombre, direccion, codigo) values(?,?,?);", Statement.RETURN_GENERATED_KEYS);
+			pst.setString(1, cliente.getNombre());
+			pst.setString(2, cliente.getDireccion());
+			pst.setInt(3, cliente.getCodigo());
 			pst.execute();
+			ResultSet rs = pst.getGeneratedKeys();
+			if(rs.next()) {
+				cliente.setIdcliente(rs.getInt(1));
+			}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -35,9 +35,8 @@ public class Main1 {
 	}
 	
 	public static void gestionCategorias(Scanner sc) {
-		int idCategoria=Funciones.dimeEntero("Introduce idCategoria: ", sc);
 		String nombre=Funciones.dimeString("Introduce nombre de categoria nueva: ", sc);
-		Categoria c = new Categoria(idCategoria, nombre);
+		Categoria c = new Categoria(nombre);
 		CategoriaDAO.inserta(c);
 	}
 

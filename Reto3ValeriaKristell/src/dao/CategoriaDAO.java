@@ -14,10 +14,13 @@ public class CategoriaDAO {
 			//abro conexion
 			Connection con=Conexion.abreConexion();
 			//creo select
-			PreparedStatement pst=con.prepareStatement("INSERT into categorias(idcategoria, nombre) values(?,?);");
-			pst.setInt(1, categoria.getIdcategoria());
-			pst.setString(2, categoria.getNombre());
+			PreparedStatement pst=con.prepareStatement("INSERT into categorias(nombre) values(?);", Statement.RETURN_GENERATED_KEYS);
+			pst.setString(1, categoria.getNombre());
 			pst.execute();
+			ResultSet rs = pst.getGeneratedKeys();
+			if(rs.next()) {
+				categoria.setIdcategoria(rs.getInt(1));
+			}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
