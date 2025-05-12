@@ -22,6 +22,7 @@ public class Producto {
 		this.talla = talla;
 		this.stock = stock;
 	}
+	
 	public int getIdProducto() {
 		return idProducto;
 	}
