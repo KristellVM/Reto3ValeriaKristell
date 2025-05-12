@@ -2,18 +2,24 @@ package clases;
 
 public class Producto {
 	private int idProducto;
+	private Categoria categoria;
 	private String nombre;
 	private double precio;
 	private String descripcion;
 	private String color;
 	private String talla;
 	private int stock;
-	
 	public int getIdProducto() {
 		return idProducto;
 	}
 	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
+	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 	public String getNombre() {
 		return nombre;
@@ -53,9 +59,9 @@ public class Producto {
 	}
 	@Override
 	public String toString() {
-		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", precio=" + precio + ", descripcion="
-				+ descripcion + ", color=" + color + ", talla=" + talla + ", stock=" + stock + "]";
+		return "Producto [idProducto=" + idProducto + ", categoria=" + categoria + ", nombre=" + nombre + ", precio="
+				+ precio + ", descripcion=" + descripcion + ", color=" + color + ", talla=" + talla + ", stock=" + stock
+				+ "]";
 	}
-	
 	
 }
