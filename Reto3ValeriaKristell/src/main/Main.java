@@ -11,7 +11,7 @@ public class Main {
 		int opcion;
 		
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion, selecciona 0 para salir", sc);
+			opcion = Funciones.dimeEntero("Elige una opcion:0-Salir 1-Mantenimiento, 2-Catalogo de productos 3-Pedidos 4-Informes", sc);
 			switch (opcion) {
 			case 1:
 				//FuncionMantenimientos();
