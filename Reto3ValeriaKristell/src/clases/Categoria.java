@@ -4,9 +4,13 @@ public class Categoria {
 private int idcategoria;
 private String nombre;
 
-public Categoria(int idcategoria, String nombre) {
+public Categoria(String nombre) {
 	super();
-	this.idcategoria = idcategoria;
+	this.nombre = nombre;
+}
+public Categoria(int idCategoria,String nombre) {
+	super();
+	this.idcategoria = idCategoria;
 	this.nombre = nombre;
 }
 
