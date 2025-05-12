@@ -33,15 +33,16 @@ public class ClienteDAO {
 	}
 	
 	public static Cliente buscar(int codigo) {
+		Cliente c = null;
 		try {
 			//abro conexion
 			Connection con=Conexion.abreConexion();
 			//creo select
 			PreparedStatement pst=con.prepareStatement("select * from clientes where codigo=?;");
 			pst.setInt(1, codigo);
-			ResultSet rs = pst.getGeneratedKeys();
-			pst.execute();
+			ResultSet rs = pst.executeQuery();
 			if(rs.next()) {
+				 c = new Cliente(rs.getInt("idCliente"),rs.getInt("codigo"),rs.getString("nombre"),rs.getString("direccion"));
 			}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -49,6 +50,7 @@ public class ClienteDAO {
 			finally {//O en el try abrir la conexion
 				Conexion.cierraConexion();
 			}
-		return null;
+		return c;
 	}
+	
 }

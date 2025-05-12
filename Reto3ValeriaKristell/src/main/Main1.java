@@ -3,7 +3,9 @@ package main;
 import java.util.Scanner;
 
 import clases.Categoria;
+import clases.Cliente;
 import dao.CategoriaDAO;
+import dao.ClienteDAO;
 import util.Funciones;
 
 public class Main1 {
@@ -13,12 +15,7 @@ public class Main1 {
 		int opcion;
 		
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion:  ", sc);
-			System.out.println("0-Salir");
-			System.out.println("1-GestionCategorias");
-			System.out.println("2-GestionProductos");
-			System.out.println(" 3-GestionClientes");
-			
+			opcion = Funciones.dimeEntero("Elige una opcion: 0-Salir 1-GestionCategorias:, 2-GestionProductos 3-GestionClientes ", sc);
 			switch (opcion) {
 			case 1:
 				gestionCategorias(sc);
@@ -45,9 +42,15 @@ public class Main1 {
 		CategoriaDAO.inserta(c);
 	}
 	
-	public static boolean gestionClientes(Scanner sc) {
-		
-		return false;
+	public static void gestionClientes(Scanner sc) {
+		int codigo = Funciones.dimeEntero("Introduce codigo de cliente: ", sc);
+		Cliente cliente1 = ClienteDAO.buscar(codigo);
+		if(cliente1!=null) {
+			cliente1.toString();
+			
+		} else {
+			System.out.println("no existe un cliente con el codigo "+codigo);
+		}
 	}
 
 }
