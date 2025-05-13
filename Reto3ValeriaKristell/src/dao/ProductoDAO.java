@@ -19,10 +19,9 @@ public class ProductoDAO {
 			// abro bd
 			Connection con = Conexion.abreConexion();
 			// creo el statement
-			PreparedStatement pst = con.prepareStatement("select categorias.idcategoria,categorias.nombre,"
-					+ "productos.nombre,productos.idproducto from productos -- \r\n"
-					+ "inner join categorias on productos.idcategoria=categorias.idcategoria\r\n"
-					+ "where categorias.nombre='?';");
+			PreparedStatement pst = con.prepareStatement("select c.idcategoria, c.nombre, p.idproducto, p.nombre, p.precio, p.descripcion, p.color, p.talla, p.stock from productos p\r\n"
+					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
+					+ "where c.idcategoria=?;");
 			pst.setString(1, categoriaNombre);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
