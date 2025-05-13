@@ -53,4 +53,21 @@ public class ClienteDAO {
 		return c;
 	}
 	
+	public static void actualiza(Cliente cliente, int codigo, String nombre, String direccion) {
+		try {
+			Connection con=Conexion.abreConexion();
+			PreparedStatement pst=con.prepareStatement("update clientes set codigo=?, nombre=?, direccion=? where idCliente=?;");
+			pst.setInt(1, codigo);
+			pst.setString(2, nombre);
+			pst.setString(3, direccion);
+			pst.setInt(4, cliente.getIdcliente());
+			pst.execute();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {//O en el try abrir la conexion
+				Conexion.cierraConexion();
+			}
+	}
+	
 }

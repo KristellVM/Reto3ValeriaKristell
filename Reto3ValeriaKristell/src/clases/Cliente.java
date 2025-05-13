@@ -37,6 +37,12 @@ public Cliente(int idcliente, int codigo, String nombre, String direccion) {
 	this.nombre = nombre;
 	this.direccion = direccion;
 }
+public Cliente(int codigo, String nombre, String direccion) {
+	super();
+	this.codigo = codigo;
+	this.nombre = nombre;
+	this.direccion = direccion;
+}
 @Override
 public String toString() {
 	return "idcliente=" + idcliente + ", codigo=" + codigo + ", nombre=" + nombre + ", direccion=" + direccion
