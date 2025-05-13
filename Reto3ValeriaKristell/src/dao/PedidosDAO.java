@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,10 +12,9 @@ import util.Funciones;
 
 public class PedidosDAO {
 	
-	public static Pedido crearPedido() {
+	public static PedidoProducto crearPedido() {
 		Scanner sc=new Scanner(System.in);
 		
-	
 		PedidoProducto pedido=new PedidoProducto();
 		
 		Cliente clienteEncontrado=null;
@@ -47,14 +47,33 @@ public class PedidosDAO {
 		 cantProd=Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
 		 //si mi el stock del producto>=esa cant
 		 if(productoEncontrado.getStock()>=cantProd) {
-			
+			 pedido.anadirProducto(productoEncontrado);
 		 }
-		 
-		 //si no hay suficiente stock
+		 //si no hay suficiente stock-> los que tenga
 		 else {
-			 
-		 }
-		}
+			 for (int i = 0; i <cantProd ; i++) {
+				pedido.anadirProducto(productoEncontrado);
+			} 
+		 }//else
+		 
+		 //mostrar direccion del cliente
+		 System.out.println(clienteEncontrado.getDireccion());
+		 //cambiar direccion
+		String respuesta = Funciones.dimeString("¿Quieres cambiar la direccion de envio?)",sc);
+			if(respuesta=="si"){
+				//pido nuevos
+				System.out.println("Nueva dirección");
+				String nuevaDireccion=sc.nextLine();
+				clienteEncontrado.setDireccion(nuevaDireccion);
+				
+				ClienteDAO.actualiza(clienteEncontrado, codigo, clienteEncontrado.getNombre(), nuevaDireccion);
+				System.out.println("Datos actualizados");
+				System.out.println("El precio total del pedido es: " + pedido.getPrecio());
+			}
+		 
+		}// si existe
+		return pedido;
+		
 	}
 	
 	
@@ -69,12 +88,14 @@ public class PedidosDAO {
  * 
  * -Si hay suficiente stock lo añadiremos al pedido.
  *  -Si no hay stock  se comprarán todos los que haya en stock.
- *  
-Así hasta que terminemos de añadir productos (establecer cómo queréis que termine, si al pedir el
+ * - Así hasta que terminemos de añadir productos (establecer cómo queréis que termine, si al pedir el
 código introduce un -1, o nada, o lo que digáis).
-Una vez que ya hemos seleccionado los productos a comprar, se mostrará la dirección del cliente que
-habíamos seleccionado antes y preguntaremos si usamos esa dirección como dirección de envío o no.
-Si nos dicen que no pediremos la nueva y pondremos esa como dirección de envío.
+
+-Una vez que ya hemos seleccionado los productos a comprar, 
+-se mostrará la dirección del cliente habíamos seleccionado antes
+
+- preguntaremos si usamos esa dirección como dirección de envío o no.
+-Si nos dicen que no pediremos la nueva y pondremos esa como dirección de envío.
 Guardaremos el pedido en la base de datos mostrando “Pedido guardado “, e indicaremos el precio
 total.*/
 	
