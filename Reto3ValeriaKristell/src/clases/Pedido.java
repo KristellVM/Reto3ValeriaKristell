@@ -8,6 +8,7 @@ public class Pedido {
 	private double precioTotal;
 	private String direccionEnvio;
 	private Date fecha;
+	
 	public int getIdPedido() {
 		return idPedido;
 	}

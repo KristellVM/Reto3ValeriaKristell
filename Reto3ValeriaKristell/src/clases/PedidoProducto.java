@@ -1,5 +1,8 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PedidoProducto {
 	/*
 CREATE TABLE pedidoproducto (
@@ -52,6 +55,10 @@ CREATE TABLE pedidoproducto (
 				+ ", unidades=" + unidades + ", precio=" + precio + "]";
 	}
 	
-	
+	public static Pedido anadirProducto(Producto producto) {
+		List<Producto> prodDelPedido=new ArrayList();
+		prodDelPedido.add(producto);
+		return pedido;
+	}
 	
 }
