@@ -22,7 +22,17 @@ public class Producto {
 		this.talla = talla;
 		this.stock = stock;
 	}
-	
+	public Producto(Categoria categoria, String nombre, double precio, String descripcion, String color,
+			String talla, int stock) {
+		super();
+		this.categoria = categoria;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.descripcion = descripcion;
+		this.color = color;
+		this.talla = talla;
+		this.stock = stock;
+	}
 
 	public int getIdProducto() {
 		return idProducto;

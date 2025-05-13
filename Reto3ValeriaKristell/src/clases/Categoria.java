@@ -31,7 +31,7 @@ public void setNombre(String nombre) {
 
 @Override
 public String toString() {
-	return "Categoria: idcategoria=" + idcategoria + ", nombre=" + nombre ;
+	return "idcategoria: " + idcategoria + ", nombre: " + nombre ;
 }
 
 

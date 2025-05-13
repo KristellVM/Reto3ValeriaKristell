@@ -1,11 +1,14 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 
 import clases.Categoria;
 import clases.Cliente;
+import clases.Producto;
 import dao.CategoriaDAO;
 import dao.ClienteDAO;
+import dao.ProductoDAO;
 import util.Funciones;
 
 public class Main1 {
@@ -20,16 +23,15 @@ public class Main1 {
 			case 1:
 				gestionCategorias(sc);
 				break;
-
 			case 2:
-				//GestionProductos();
+				gestionProductos(sc);
 				break;
-
 			case 3:
 				gestionClientes(sc);
 				break;
 			case 0:
 				System.out.println("Saliendo de mantenimientos");
+				break;
 			default:
 				System.out.println("Opción inválida. Seleccionar otra vez");
 				break;
@@ -44,8 +46,31 @@ public class Main1 {
 		CategoriaDAO.inserta(c);
 	}
 	
-	public void gestionProductos(Scanner sc) {
+	public static void gestionProductos(Scanner sc) {
+		/*
+	Producto(Categoria categoria, String nombre, double precio, String descripcion, String color,
+			String talla, int stock) 
+		 * */
+		/*String nombre = Funciones.dimeString("Introduce nombre: ", sc);
+		double precio = Funciones.dimeDouble("Introduce precio: ", sc);
+		String desc = Funciones.dimeString("Introduce descripción: ", sc);
+		String color = Funciones.dimeString("Introduce color: ", sc);
+		String talla = Funciones.dimeString("Introduce talla: ", sc);
+		int stock = Funciones.dimeEntero("Introduce stock: ", sc);*/
+		List<Categoria> categorias = CategoriaDAO.lista();
+		for (Categoria categoria : categorias) {
+			System.out.println(categoria);
+		}
+		int idCategoria = -1;
+		do {
+			idCategoria = Funciones.dimeEntero("Selecciona idCategoria: ", sc);
+		} while (idCategoria<0 || idCategoria>=categorias.size());
 		
+		Producto p = new Producto(categorias.get(idCategoria-1), Funciones.dimeString("Introduce nombre: ", sc), 
+				Funciones.dimeDouble("Introduce precio: ", sc), Funciones.dimeString("Introduce descripción: ", sc),
+				Funciones.dimeString("Introduce color: ", sc), Funciones.dimeString("Introduce talla: ", sc),
+				Funciones.dimeEntero("Introduce stock: ", sc));
+		ProductoDAO.insertar(p);
 	}
 	
 	public static void gestionClientes(Scanner sc) {
