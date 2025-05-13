@@ -51,8 +51,8 @@ public class ProductoDAO {
 			// abro bd
 			Connection con = Conexion.abreConexion();
 			// creo el statement
-			PreparedStatement pst = con.prepareStatement("\r\n" + "	select * from productos\r\n"
-					+ "	where productos.nombre like ? and talla like ? and color like ?;\r\n" + "\r\n" + "");
+			PreparedStatement pst = con.prepareStatement("select * from productos"
+					+ "where productos.nombre like ? and talla like ? and color like ?");
 			pst.setString(1, "%"+nomProducto +"%");
 			pst.setString(2,"%"+ talla+"%");
 			pst.setString(3,"%"+ color+"%");
@@ -63,7 +63,6 @@ public class ProductoDAO {
 				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
 						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
 						rs.getString("talla"), rs.getInt("stock"));
-
 				/*
 				 * Buscar productos: pediremos por consola un nombre, una talla y un color. El
 				 * usuario puede no introducir nada en alguna de esas preguntas (pulsa intro sin
