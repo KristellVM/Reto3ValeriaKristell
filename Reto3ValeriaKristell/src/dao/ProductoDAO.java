@@ -45,9 +45,9 @@ public class ProductoDAO {
 	}
 
 	// FUNCION 2
-
 	public static List<Producto> BuscarProducto(String nombre, String talla, String color ) {
 		List<Producto> listaProductos = new ArrayList<Producto>();
+	
 		try {
 			// abro bd
 			Connection con = Conexion.abreConexion();
@@ -68,20 +68,19 @@ public class ProductoDAO {
 				 Producto p = new Producto(rs.getInt("idProducto"), categoria, rs.getString(4),
 						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
 						rs.getString("talla"), rs.getInt("stock"));
-				 listaProductos.add(p);	
+				 listaProductos.add(p);
 			}
 			rs.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cierraConexion();
-		}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				Conexion.cierraConexion();
+			}
 		return listaProductos;
-		
 	}
 
 	
-	//FUNCION 3 -> BSUCAR PRODUCTO X NOMBRE
+	//FUNCION 3 -> BUCAR PRODUCTO X NOMBRE
 	public static Producto BuscarProductonombre(String nombre) {
 		Producto producto = null;
 		try {
