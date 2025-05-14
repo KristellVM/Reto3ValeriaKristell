@@ -33,6 +33,15 @@ public class Pedido {
 	public void setDireccionEnvio(String direccionEnvio) {
 		this.direccionEnvio = direccionEnvio;
 	}
+	
+	public Pedido(int idPedido, Cliente cliente, double precioTotal, String direccionEnvio, Date fecha) {
+		super();
+		this.idPedido = idPedido;
+		this.cliente = cliente;
+		this.precioTotal = precioTotal;
+		this.direccionEnvio = direccionEnvio;
+		this.fecha = fecha;
+	}
 	public Date getFecha() {
 		return fecha;
 	}

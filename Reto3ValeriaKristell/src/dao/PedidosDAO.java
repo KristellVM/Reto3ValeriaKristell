@@ -1,104 +1,136 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import clases.Categoria;
 import clases.Cliente;
 import clases.Pedido;
 import clases.PedidoProducto;
 import clases.Producto;
+import util.Conexion;
 import util.Funciones;
 
 public class PedidosDAO {
-	
+
+	// FUNCION 1
 	public static PedidoProducto crearPedido() {
-		Scanner sc=new Scanner(System.in);
-		
-		PedidoProducto pedido=new PedidoProducto();
-		
-		Cliente clienteEncontrado=null;
+		Scanner sc = new Scanner(System.in);
+
+		PedidoProducto pedido = new PedidoProducto();
+
+		Cliente clienteEncontrado = null;
 		int codigo;
-	
+
 		do {
-			 codigo=Funciones.dimeEntero("Introduce el codigo de un cliente", sc);
-			 clienteEncontrado=dao.ClienteDAO.buscar(codigo);
-		}while(!(clienteEncontrado!= null));//mientras no exista el cliente con ese codigo-> lo vuelvo a pedir
-		
-		//una vez tengo el cliente con ese codigo-> muestrop su nombre
+			codigo = Funciones.dimeEntero("Introduce el codigo de un cliente", sc);
+			clienteEncontrado = dao.ClienteDAO.buscar(codigo);
+		} while (!(clienteEncontrado != null));// mientras no exista el cliente con ese codigo-> lo vuelvo a pedir
+
+		// una vez tengo el cliente con ese codigo-> muestrop su nombre
 		System.out.println(clienteEncontrado.getNombre());
-		
-		//bucle pedir productos x nombre .-> mientras que NO exista 
-		
-		
-		// da nombre,talla,collor y devuelve un obj producto-> 
-		//public static Producto BuscarProducto(String nombre, String talla, String color ) {
-		Producto productoEncontrado=null;
+
+		// bucle pedir productos x nombre .-> mientras que NO exista
+
+		// da nombre,talla,collor y devuelve un obj producto->
+		// public static Producto BuscarProducto(String nombre, String talla, String
+		// color ) {
+		Producto productoEncontrado = null;
 		String nomProd;
-		Boolean existeProducto=false;
+		Boolean existeProducto = false;
 		do {
-		 nomProd=Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
-		 productoEncontrado=dao.ProductoDAO.BuscarProductonombre(nomProd);
-		 existeProducto=true;
-		}while(!(productoEncontrado!= null));
-	
+			nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
+			productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
+			existeProducto = true;
+		} while (!(productoEncontrado != null));
+
 		int cantProd;
-		if(existeProducto=true) {// si existe-> pido cant
-		 cantProd=Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
-		 //si mi el stock del producto>=esa cant
-		 if(productoEncontrado.getStock()>=cantProd) {
-			 pedido.anadirProducto(productoEncontrado);
-		 }
-		 //si no hay suficiente stock-> los que tenga
-		 else {
-			 for (int i = 0; i <cantProd ; i++) {
+		if (existeProducto = true) {// si existe-> pido cant
+			cantProd = Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
+			// si mi el stock del producto>=esa cant
+			if (productoEncontrado.getStock() >= cantProd) {
 				pedido.anadirProducto(productoEncontrado);
-			} 
-		 }//else
-		 
-		 //mostrar direccion del cliente
-		 System.out.println(clienteEncontrado.getDireccion());
-		 //cambiar direccion
-		String respuesta = Funciones.dimeString("¿Quieres cambiar la direccion de envio?)",sc);
-			if(respuesta=="si"){
-				//pido nuevos
+			}
+			// si no hay suficiente stock-> los que tenga
+			else {
+				for (int i = 0; i < cantProd; i++) {
+					pedido.anadirProducto(productoEncontrado);
+				}
+			} // else
+
+			// mostrar direccion del cliente
+			System.out.println(clienteEncontrado.getDireccion());
+			// cambiar direccion
+			String respuesta = Funciones.dimeString("¿Quieres cambiar la direccion de envio?)", sc);
+			if (respuesta == "si") {
+				// pido nuevos
 				System.out.println("Nueva dirección");
-				String nuevaDireccion=sc.nextLine();
+				String nuevaDireccion = sc.nextLine();
 				clienteEncontrado.setDireccion(nuevaDireccion);
-				
+
 				ClienteDAO.actualiza(clienteEncontrado, codigo, clienteEncontrado.getNombre(), nuevaDireccion);
 				System.out.println("Datos actualizados");
 				System.out.println("El precio total del pedido es: " + pedido.getPrecio());
 			}
-		 
-		}// si existe
+
+		} // si existe
 		return pedido;
-		
+
 	}
-	
-	
-	
-	
-/*3.1. Crear pedido: 
- * -pediremos el código de un cliente hasta que exista,
- * -muestra nombre del cliente con ese código.
- * -bucle pidiendo nombres de productos.
- * -Buscamos en la base de datos si hay algún producto con ese nombre
- * - y si existe, pediremos cuántas unidades queremos de ese producto. 
- * 
- * -Si hay suficiente stock lo añadiremos al pedido.
- *  -Si no hay stock  se comprarán todos los que haya en stock.
- * - Así hasta que terminemos de añadir productos (establecer cómo queréis que termine, si al pedir el
-código introduce un -1, o nada, o lo que digáis).
 
--Una vez que ya hemos seleccionado los productos a comprar, 
--se mostrará la dirección del cliente habíamos seleccionado antes
+	/*
+	 * 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
+	 * mostrando a continuación el nombre del cliente con ese código. Luego haremos
+	 * un bucle en el que vayamos pidiendo nombres de productos. Buscamos en la base
+	 * de datos si hay algún producto con ese nombre y si existe, pediremos cuántas
+	 * unidades queremos de ese producto. Si hay suficiente stock lo añadiremos al
+	 * pedido. Si no hay stock suficiente se comprarán todos los que haya en stock.
+	 * Así hasta que terminemos de añadir productos (establecer cómo queréis que
+	 * termine, si al pedir el código introduce un -1, o nada, o lo que digáis). Una
+	 * vez que ya hemos seleccionado los productos a comprar, se mostrará la
+	 * dirección del cliente que habíamos seleccionado antes y preguntaremos si
+	 * usamos esa dirección como dirección de envío o no. Si nos dicen que no
+	 * pediremos la nueva y pondremos esa como dirección de envío. Guardaremos el
+	 * pedido en la base de datos mostrando “Pedido guardado “, e indicaremos el
+	 * precio total.
+	 */
 
-- preguntaremos si usamos esa dirección como dirección de envío o no.
--Si nos dicen que no pediremos la nueva y pondremos esa como dirección de envío.
-Guardaremos el pedido en la base de datos mostrando “Pedido guardado “, e indicaremos el precio
-total.*/
-	
-	
-	
+	// FUNCION 2
+	public static List<Pedido> verPedidos() {
+		List<Pedido> listaPedidos = new ArrayList<Pedido>();
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select * from pagos where fechapago like '%-05-%'");
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+
+				Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getInt("codigo"), rs.getString("nombre"),
+						rs.getString("direccion"));// int idcliente, int codigo, String nombre, String direccion
+
+				Pedido pedido = new Pedido(rs.getInt("idcliente"), cliente, rs.getInt("precioTotal"),
+						rs.getString("direccionEnvio"), rs.getDate("fecha"));
+
+				listaPedidos.add(pedido);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {// O en el try abrir la conexion
+			Conexion.cierraConexion();
+		}
+		return listaPedidos;
+
+		/* 3.2. Ver pedidos: mostraremos todos los pedidos del mes en el que estamos */
+
+	}
+
 }

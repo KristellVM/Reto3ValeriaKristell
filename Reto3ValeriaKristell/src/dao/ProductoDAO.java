@@ -45,7 +45,6 @@ public class ProductoDAO {
 	}
 
 	// FUNCION 2
-
 	public static Producto BuscarProducto(String nombre, String talla, String color ) {
 		Producto producto=null;
 		try {
@@ -87,7 +86,7 @@ public class ProductoDAO {
 	}
 
 	
-	//FUNCION 3 -> BSUCAR PRODUCTO X NOMBRE
+	//FUNCION 3 -> BUCAR PRODUCTO X NOMBRE
 	public static Producto BuscarProductonombre(String nombre) {
 		Producto producto = null;
 		try {
