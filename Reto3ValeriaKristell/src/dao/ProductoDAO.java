@@ -14,7 +14,7 @@ import util.Conexion;
 
 public class ProductoDAO {
 	// FUNCION 1
-	public static List<Producto> FuncionListaProductos(String categoriaNombre) {
+	public static List<Producto> FuncionListaProductos(int idCategoria) {
 		List<Producto> listaProductos = new ArrayList<Producto>();
 		try {
 			// abro bd
@@ -23,10 +23,10 @@ public class ProductoDAO {
 			PreparedStatement pst = con.prepareStatement("select c.idcategoria, c.nombre, p.idproducto, p.nombre, p.precio, p.descripcion, p.color, p.talla, p.stock from productos p\r\n"
 					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
 					+ "where c.idcategoria=?;");
-			pst.setString(1, categoriaNombre);
+			pst.setInt(1, idCategoria);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString("nombre"));// int
+				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString(2));// int
 																										// idcategoria,
 																										// String nombre
 				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),

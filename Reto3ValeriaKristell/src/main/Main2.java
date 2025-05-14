@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import clases.Categoria;
 import clases.Producto;
+import dao.CategoriaDAO;
 import dao.ProductoDAO;
 import util.Funciones;
 
@@ -18,6 +20,7 @@ public class Main2 {
 			switch (opcion) {
 			case 1:
 				ProductosPorCategoria(sc);
+				
 				break;
 			case 2:
 				BuscarProductos(sc);
@@ -34,7 +37,16 @@ public class Main2 {
 	}
 	
 	public static void ProductosPorCategoria(Scanner sc) {
+		List<Categoria> categorias = CategoriaDAO.lista();
+		for (Categoria categoria : categorias) {
+			System.out.println(categoria);
+		}
+		int idCategoria = Funciones.dimeEntero("Selecciona idCategoria", sc);
 		
+		List<Producto> listaProductos = ProductoDAO.FuncionListaProductos(idCategoria);
+		for (Producto producto : listaProductos) {
+			System.out.println(producto);
+		}
 	}
 	
 	public static void BuscarProductos(Scanner sc) {
@@ -49,7 +61,7 @@ public class Main2 {
 			System.out.println("no se encontraron productos");
 		} else {
 			for (Producto producto : lista) {
-				System.out.println(producto);
+				System.out.println(producto.getCategoria().getNombre()+producto);
 			}
 		}
 	}

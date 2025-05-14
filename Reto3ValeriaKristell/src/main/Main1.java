@@ -18,11 +18,7 @@ public class Main1 {
 		int opcion;
 
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion:", sc);
-			System.out.println("0-Salir");
-			System.out.println(" 1-GestionCategorias");
-			System.out.println(" 2-GestionProductos");
-			System.out.println("lientes");
+			opcion = Funciones.dimeEntero("Elige una opcion:\n0-Salir\n1-GestionCategorias\n2-GestionProductos\n3-GestionClientes", sc);
 
 			switch (opcion) {
 			case 1:
@@ -38,7 +34,7 @@ public class Main1 {
 				System.out.println("Saliendo de mantenimientos");
 				break;
 			default:
-				System.out.println("Opci�n inv�lida. Seleccionar otra vez");
+				System.out.println("Opcion no valida. Seleccionar otra vez");
 				break;
 			}
 		} while (opcion != 0);
