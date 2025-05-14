@@ -13,6 +13,7 @@ import clases.Producto;
 import util.Conexion;
 
 public class ProductoDAO {
+	
 	// FUNCION 1
 	public static List<Producto> FuncionListaProductos(String categoriaNombre) {
 		List<Producto> listaProductos = new ArrayList<Producto>();
