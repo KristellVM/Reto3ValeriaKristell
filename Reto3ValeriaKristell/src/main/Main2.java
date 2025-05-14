@@ -1,7 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import clases.Producto;
+import dao.ProductoDAO;
 import util.Funciones;
 
 public class Main2 {
@@ -16,6 +20,7 @@ public class Main2 {
 				ProductosPorCategoria(sc);
 				break;
 			case 2:
+				BuscarProductos(sc);
 				break;
 			case 0:
 				System.out.println("Saliendo de catálogo de productos");
@@ -30,6 +35,23 @@ public class Main2 {
 	
 	public static void ProductosPorCategoria(Scanner sc) {
 		
+	}
+	
+	public static void BuscarProductos(Scanner sc) {
+		System.out.println("Introduce nombre: ");
+		String nombre = sc.nextLine();
+		System.out.println("Introduce talla: ");
+		String talla = sc.nextLine();
+		System.out.println("Introduce color: ");
+		String color = sc.nextLine();
+		List<Producto> lista = ProductoDAO.BuscarProducto(nombre, talla, color);
+		if(lista.isEmpty()) {
+			System.out.println("no se encontraron productos");
+		} else {
+			for (Producto producto : lista) {
+				System.out.println(producto);
+			}
+		}
 	}
 }
 
