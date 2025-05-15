@@ -52,6 +52,7 @@ public class Main3 {
 		
 		Producto productoEncontrado = null;
 		String nomProd;
+		
 		do {
 			nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 			productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
