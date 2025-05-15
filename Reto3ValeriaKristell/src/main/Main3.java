@@ -21,7 +21,7 @@ public class Main3 {
 
 		switch (opcion) {
 		case 1:
-		PedidosDAO.crearPedido();
+		crearPedido(sc);
 			break;
 		case 2:
 			
@@ -52,23 +52,28 @@ public class Main3 {
 		
 		Producto productoEncontrado = null;
 		String nomProd;
+<<<<<<< HEAD
 		
+=======
+		int cantProd=0;
+>>>>>>> branch 'main' of https://github.com/KristellVM/Reto3ValeriaKristell.git
 		do {
 			nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 			productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
-		} while (productoEncontrado == null);
-		
-		int cantProd = Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
-		// si mi el stock del producto>=esa cant
-		if (productoEncontrado.getStock() >= cantProd) {
-			//pedido.anadirProducto(productoEncontrado);
-		}
-		// si no hay suficiente stock-> los que tenga
-		else {
-			for (int i = 0; i < cantProd; i++) {
-				//pedido.anadirProducto(productoEncontrado);
+			if(productoEncontrado!=null) {
+				cantProd = Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
+				if (productoEncontrado.getStock() >= cantProd) {
+					//pedido.anadirProducto(productoEncontrado);
+				}
+				// si no hay suficiente stock-> los que tenga
+				else {
+					for (int i = 0; i < cantProd; i++) {
+						//pedido.anadirProducto(productoEncontrado);
+					}
+				}
 			}
-		} // else
+		} while (productoEncontrado == null);
+	
 		
 	}
 
