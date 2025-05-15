@@ -52,11 +52,7 @@ public class Main3 {
 		
 		Producto productoEncontrado = null;
 		String nomProd;
-<<<<<<< HEAD
-		
-=======
 		int cantProd=0;
->>>>>>> branch 'main' of https://github.com/KristellVM/Reto3ValeriaKristell.git
 		do {
 			nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 			productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
