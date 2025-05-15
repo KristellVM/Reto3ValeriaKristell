@@ -19,7 +19,6 @@ CREATE TABLE pedidoproducto (
 	private Producto producto;
 	private int unidades;
 	private double precio;
-	private List<Producto> listaProductos;
 	
 	
 	public int getIdPedidoProducto() {
@@ -62,17 +61,10 @@ CREATE TABLE pedidoproducto (
 		this.precio = precio;
 	}
 
-	public List<Producto> getListaProductos() {
-		return listaProductos;
-	}
 
-	public void setListaProductos(List<Producto> listaProductos) {
-		this.listaProductos = listaProductos;
-	}
 
 	public PedidoProducto()
 	{
-		listaProductos= new ArrayList<Producto>();
 	}
 	
 	public PedidoProducto(int idPedidoProducto, Pedido pedido, Producto producto, int unidades, double precio
@@ -83,19 +75,12 @@ CREATE TABLE pedidoproducto (
 		this.producto = producto;
 		this.unidades = unidades;
 		this.precio = precio;
-		this.listaProductos = new ArrayList<Producto>();
 	}
 
 	@Override
 	public String toString() {
 		return "PedidoProducto [idPedidoProducto=" + idPedidoProducto + ", pedido=" + pedido + ", producto=" + producto
-				+ ", unidades=" + unidades + ", precio=" + precio + ", listaProductos=" + listaProductos + "]";
+				+ ", unidades=" + unidades + ", precio=" + precio;
 	}
 
-	public static PedidoProducto anadirProducto(Producto producto) {
-		PedidoProducto pedido=new PedidoProducto();
-		pedido.getListaProductos().add(producto);
-		return pedido;// con lista de productos
-	}
-	
 }

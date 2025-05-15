@@ -30,16 +30,29 @@ public class prueba {
 		Producto productoEncontrado = null;
 		String nomProd;
 
-		int opcion = 0;
+		int opcion = 0, cantProd=0;
 
 		do {
-			opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
+			opcion = Funciones.dimeEntero("�Quieres seguir agregando productos, 1- Si , 2-No?", sc);
 			if (opcion == 1) {
 
 				do {
 					nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 					productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
-
+					if(productoEncontrado!=null) {
+						cantProd = Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
+						if(productoEncontrado.getStock()>=cantProd) {
+							/*
+							 * private int idPedidoProducto;
+								private Pedido pedido;
+								private Producto producto;
+								private int unidades;
+								private double precio;
+							 * */
+							PedidoProducto pp = new PedidoProducto();
+							
+						}
+					}
 				} while (productoEncontrado == null);
 
 			}
