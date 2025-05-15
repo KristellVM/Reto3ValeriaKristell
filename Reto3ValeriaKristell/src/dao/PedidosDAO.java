@@ -31,6 +31,7 @@ public class PedidosDAO {
 		do {
 			codigo = Funciones.dimeEntero("Introduce el codigo de un cliente", sc);
 			clienteEncontrado = dao.ClienteDAO.buscar(codigo);
+			
 		} while (!(clienteEncontrado != null));// mientras no exista el cliente con ese codigo-> lo vuelvo a pedir
 
 		// una vez tengo el cliente con ese codigo-> muestrop su nombre
