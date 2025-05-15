@@ -71,7 +71,9 @@ public class PedidosDAO {
 			// abro conexion
 			Connection con = Conexion.abreConexion();
 			// creo select
-			PreparedStatement pst = con.prepareStatement("select * from pagos where fechapago like '%-05-%'");
+			PreparedStatement pst = con.prepareStatement("select *from pedidos\r\n"
+					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n"
+					+ " where month(fecha)= month(curdate()); ");
 
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
