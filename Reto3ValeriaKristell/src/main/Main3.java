@@ -60,12 +60,12 @@ public class Main3 {
 		int cantProd = Funciones.dimeEntero("Cuantas unidades quieres del producto?", sc);
 		// si mi el stock del producto>=esa cant
 		if (productoEncontrado.getStock() >= cantProd) {
-			pedido.anadirProducto(productoEncontrado);
+			//pedido.anadirProducto(productoEncontrado);
 		}
 		// si no hay suficiente stock-> los que tenga
 		else {
 			for (int i = 0; i < cantProd; i++) {
-				pedido.anadirProducto(productoEncontrado);
+				//pedido.anadirProducto(productoEncontrado);
 			}
 		} // else
 		
