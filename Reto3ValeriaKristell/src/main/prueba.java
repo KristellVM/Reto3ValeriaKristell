@@ -30,43 +30,21 @@ public class prueba {
 		Producto productoEncontrado = null;
 		String nomProd;
 
-		int opcion = 1;
+		int opcion = 0;
 
 		do {
-<<<<<<< HEAD
-
-			if (opcion == 1) {
-				if (cont != 0) {
-					opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
-				}
-=======
 			opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
 			if (opcion == 1) {
->>>>>>> branch 'main' of https://github.com/KristellVM/Reto3ValeriaKristell.git
 
 				do {
 					nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 					productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
-					
+
 				} while (productoEncontrado == null);
 
 			}
 
 		} while (opcion != 2);
-		
-		do {
-			opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
-			if(opcion!=2) {
-				do {
-					if(productoEncontrado!=null) {
-						
-					}
-					nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
-					productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
-					
-				} while (productoEncontrado == null);
-			}
-		} while(opcion!=2);
 
 	}
 
