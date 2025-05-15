@@ -29,25 +29,19 @@ public class prueba {
 
 		Producto productoEncontrado = null;
 		String nomProd;
-		int cont = 0;
 
 		int opcion = 0;
 
 		do {
-
-			if (opcion != 2) {
-				if (cont != 0) {
-
-					opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
-
-				}
+			opcion = Funciones.dimeEntero("¿Quieres seguir añadiendo productos, 1- Si , 2-No?", sc);
+			if (opcion == 1) {
 
 				do {
 					nomProd = Funciones.dimeString("Introduce el nombre del producto que quieres", sc);
 					productoEncontrado = dao.ProductoDAO.BuscarProductonombre(nomProd);
 
 				} while (productoEncontrado == null);
-				cont++;
+
 			}
 
 		} while (opcion != 2);
