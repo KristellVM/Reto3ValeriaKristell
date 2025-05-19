@@ -20,35 +20,32 @@ import util.Funciones;
 public class PedidosDAO {
 
 	// FUNCION 1
-	/*public static PedidoProducto crearPedido() {
-		Scanner sc = new Scanner(System.in);
-
-		PedidoProducto pedido = new PedidoProducto();
-
-	
-
-			// mostrar direccion del cliente
-			System.out.println(clienteEncontrado.getDireccion());
-			// cambiar direccion
-			String respuesta = Funciones.dimeString("¿Quieres cambiar la direccion de envio?)", sc);
-			if (respuesta == "si") {
-				// pido nuevos
-				System.out.println("Nueva dirección");
-				String nuevaDireccion = sc.nextLine();
-				clienteEncontrado.setDireccion(nuevaDireccion);
-
-				ClienteDAO.actualiza(clienteEncontrado, codigo, clienteEncontrado.getNombre(), nuevaDireccion);
-				System.out.println("Datos actualizados");
-				System.out.println("El precio total del pedido es: " + pedido.getPrecio());
-			}
-
-		} // si existe
-		return pedido;
-
-	}/*
-
 	/*
-	 * 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
+	 * public static PedidoProducto crearPedido() { Scanner sc = new
+	 * Scanner(System.in);
+	 * 
+	 * PedidoProducto pedido = new PedidoProducto();
+	 * 
+	 * 
+	 * 
+	 * // mostrar direccion del cliente
+	 * System.out.println(clienteEncontrado.getDireccion()); // cambiar direccion
+	 * String respuesta =
+	 * Funciones.dimeString("¿Quieres cambiar la direccion de envio?)", sc); if
+	 * (respuesta == "si") { // pido nuevos System.out.println("Nueva dirección");
+	 * String nuevaDireccion = sc.nextLine();
+	 * clienteEncontrado.setDireccion(nuevaDireccion);
+	 * 
+	 * ClienteDAO.actualiza(clienteEncontrado, codigo,
+	 * clienteEncontrado.getNombre(), nuevaDireccion);
+	 * System.out.println("Datos actualizados");
+	 * System.out.println("El precio total del pedido es: " + pedido.getPrecio()); }
+	 * 
+	 * } // si existe return pedido;
+	 * 
+	 * }/*
+	 * 
+	 * /* 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
 	 * mostrando a continuación el nombre del cliente con ese código. Luego haremos
 	 * un bucle en el que vayamos pidiendo nombres de productos. Buscamos en la base
 	 * de datos si hay algún producto con ese nombre y si existe, pediremos cuántas
@@ -71,9 +68,9 @@ public class PedidosDAO {
 			// abro conexion
 			Connection con = Conexion.abreConexion();
 			// creo select
-			PreparedStatement pst = con.prepareStatement("select *from pedidos\r\n"
-					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n"
-					+ " where month(fecha)= month(curdate()); ");
+			PreparedStatement pst = con.prepareStatement(
+					"select *from pedidos\r\n" + "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n"
+							+ " where month(fecha)= month(curdate()); ");
 
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
@@ -98,4 +95,12 @@ public class PedidosDAO {
 
 	}
 
-}
+	
+	
+		
+		
+		
+		
+	}
+
+
