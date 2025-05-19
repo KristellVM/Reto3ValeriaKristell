@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import clases.Categoria;
 import clases.Cliente;
 import clases.Pedido;
 import clases.Producto;
@@ -35,10 +36,10 @@ public class Main4 {
 				if (cliente == null) {
 					System.out.println("El cliente no existe");
 				}
-
+				PedidosPorCliente(cliente);
 				break;
 			case 3:
-				// gestionClientes(sc);
+				ProductosMasVendido();
 				break;
 			case 0:
 				System.out.println("Saliendo de mantenimientos");
@@ -60,7 +61,7 @@ public class Main4 {
 		}
 
 	}
-	
+
 	public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
 		// busco los pedidos de ese cliente
@@ -84,7 +85,40 @@ public class Main4 {
 		}
 		return listaPedidos;
 	}
+	// 4.3 Productos más vendido: mostraremos el producto del que se hayan comprado
+	// más unidades. Si hay
+	// empate se mostrarán todos los empatados.
 
-	
+	public static List<Producto> ProductosMasVendido() { // nunca scanner en los daos-> main
+		List<Producto> listaProductoMasVendido = new ArrayList<Producto>();
+		// busco los pedidos de ese cliente
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("\r\n"
+					+ "select productos.nombre, SUM(pedidoproducto.unidades) as total_unidades\r\n"
+					+ "from pedidoproducto \r\n"
+					+ "join productos  on pedidoproducto.idproducto = productos.idproducto\r\n"
+					+ "group by  pedidoproducto.idproducto\r\n" + "having total_unidades = (\r\n"
+					+ "select MAX(unidades_totales)\r\n" + "from (\r\n" + "select SUM(unidades) as unidades_totales\r\n"
+					+ "from pedidoproducto\r\n" + "group by idproducto\r\n" + ") AS subconsulta\r\n" + ");\r\n" + "");
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString("nombre"));
+
+				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
+						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
+						rs.getString("talla"), rs.getInt("stock"));
+				listaProductoMasVendido.add(producto);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return listaProductoMasVendido;
+	}
 
 }
