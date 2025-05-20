@@ -1,8 +1,10 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 
 import clases.Cliente;
+import clases.Pedido;
 import clases.PedidoProducto;
 import clases.Producto;
 import dao.PedidosDAO;
@@ -24,12 +26,10 @@ public class Main3 {
 		crearPedido(sc);
 			break;
 		case 2:
-			
+		verPedidos(sc);
 			break;
-		case 3:
-			
-			break;
-		
+		case 0:
+			System.out.println("Saliendo de Pedidos");
 		default:
 			System.out.println("Opcion inválida. Seleccionar otra vez");
 			break;
@@ -69,8 +69,14 @@ public class Main3 {
 				}
 			}
 		} while (productoEncontrado == null);
-	
 		
+	}
+	
+	public static void verPedidos(Scanner sc) {
+		List<Pedido> pedidosPorMes = PedidosDAO.verPedidos();
+		for (Pedido pedido : pedidosPorMes) {
+			System.out.println(pedido);
+		}
 	}
 
 }

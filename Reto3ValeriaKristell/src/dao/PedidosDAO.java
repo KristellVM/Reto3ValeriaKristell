@@ -66,20 +66,17 @@ public class PedidosDAO {
 			Connection con = Conexion.abreConexion();
 			// creo select
 			PreparedStatement pst = con.prepareStatement(
-					"select *from pedidos\r\n" + "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n"
-							+ " where month(fecha)= month(curdate()); ");
-
+					"SELECT pe.idpedido,pe.precioTotal, pe.direccionEnvio, pe.fecha, cl.idcliente, cl.codigo, cl.nombre, cl.direccion\r\n"
+					+ "	from pedidos pe \r\n"
+					+ "	inner join clientes cl on pe.idcliente = cl.idcliente"
+					+ " where month(pe.fecha)= month(curdate());");
+			
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-
-				Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getInt("codigo"), rs.getString("nombre"),
-						rs.getString("direccion"));// int idcliente, int codigo, String nombre, String direccion
-
-				Pedido pedido = new Pedido(rs.getInt("idcliente"), cliente, rs.getInt("precioTotal"),
-						rs.getString("direccionEnvio"), rs.getDate("fecha"));
-
+				Cliente cliente = new Cliente(rs.getInt("idcliente"), rs.getInt("codigo"), rs.getString(7),rs.getString("direccion"));
+				Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getInt("precioTotal"), rs.getString("direccionEnvio"), rs.getDate("fecha"));
 				listaPedidos.add(pedido);
-
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,17 +84,17 @@ public class PedidosDAO {
 			Conexion.cierraConexion();
 		}
 		return listaPedidos;
-
-		/* 3.2. Ver pedidos: mostraremos todos los pedidos del mes en el que estamos */
-
 	}
 
 	public static void actualizaDirPrecio(Pedido pedido, String direccion, Double precio) {
 		try {
 			Connection con = Conexion.abreConexion();
-			PreparedStatement pst = con.prepareStatement("UPDATE pedidos set direccionEnvio = ?, precioTotal=? WHERE idpedido=?;");
-			pst.setString(1, direccion);
-			pst.setDouble(2, precio);
+			PreparedStatement pst = con.prepareStatement("update pedidos\r\n"
+					+ "set precioTotal = ?,\r\n"
+					+ "direccionEnvio = ?\r\n"
+					+ "where idpedido=?;");
+			pst.setDouble(1, precio);
+			pst.setString(2, direccion);
 			pst.setInt(3, pedido.getIdPedido());
 		} catch (Exception e) {
 			e.printStackTrace();

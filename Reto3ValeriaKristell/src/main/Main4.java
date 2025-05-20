@@ -53,10 +53,21 @@ public class Main4 {
 
 	public static void bajoStock(Scanner sc) {
 		List<Producto> listaBajoStock = ProductoDAO.mostrarProductos();
-
 		for (Producto producto : listaBajoStock) {
 			if (producto.getStock() < 5) {
 				System.out.println(producto);
+			}
+		}
+		for (Producto producto : listaBajoStock) {
+			if (producto.getStock() < 5) {
+				int cant = 0;
+				do {
+					cant = Funciones.dimeEntero("En cuantas unidades quieres aumentar el stock de "+producto.getNombre(), sc);
+					if(cant>0) {
+						int stockNuevo=producto.getStock()+cant;
+						ProductoDAO.updateStock(producto, stockNuevo);
+					}
+				} while (cant<=0);
 			}
 		}
 
