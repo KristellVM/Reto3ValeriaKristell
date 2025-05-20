@@ -63,14 +63,21 @@ CREATE TABLE pedidoproducto (
 
 
 
-	public PedidoProducto()
-	{
+	public PedidoProducto(){
+		
 	}
 	
 	public PedidoProducto(int idPedidoProducto, Pedido pedido, Producto producto, int unidades, double precio
 		) {
 		super();
 		this.idPedidoProducto = idPedidoProducto;
+		this.pedido = pedido;
+		this.producto = producto;
+		this.unidades = unidades;
+		this.precio = precio;
+	}
+	
+	public PedidoProducto(Pedido pedido, Producto producto, int unidades, double precio) {
 		this.pedido = pedido;
 		this.producto = producto;
 		this.unidades = unidades;

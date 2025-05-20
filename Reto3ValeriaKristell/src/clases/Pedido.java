@@ -42,6 +42,20 @@ public class Pedido {
 		this.direccionEnvio = direccionEnvio;
 		this.fecha = fecha;
 	}
+	
+	public Pedido(Cliente cliente, double precioTotal, String direccionEnvio, Date fecha) {
+		super();
+		this.cliente = cliente;
+		this.precioTotal = precioTotal;
+		this.direccionEnvio = direccionEnvio;
+		this.fecha = fecha;
+	}
+	
+	public Pedido(Cliente cliente, Date fecha) {
+		super();
+		this.cliente = cliente;
+		this.fecha = fecha;
+	}
 	public Date getFecha() {
 		return fecha;
 	}

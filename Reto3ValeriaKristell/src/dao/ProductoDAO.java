@@ -164,5 +164,21 @@ public class ProductoDAO {
 		return lista;
 		
 	}
+	
+	public static void updateStock(Producto producto, int cant) {
+		try {
+			Connection con = Conexion.abreConexion();
+			// creo el statement
+			PreparedStatement pst = con.prepareStatement("UPDATE productos set stock = ? WHERE idproducto=?;");
+			pst.setInt(1, cant);
+			pst.setInt(2, producto.getIdProducto());
+			pst.execute();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			Conexion.cierraConexion();
+		}
+	}
 
 }

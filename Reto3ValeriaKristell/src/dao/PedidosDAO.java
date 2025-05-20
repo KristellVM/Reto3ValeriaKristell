@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -20,32 +21,7 @@ import util.Funciones;
 public class PedidosDAO {
 
 	// FUNCION 1
-	/*
-	 * public static PedidoProducto crearPedido() { Scanner sc = new
-	 * Scanner(System.in);
-	 * 
-	 * PedidoProducto pedido = new PedidoProducto();
-	 * 
-	 * 
-	 * 
-	 * // mostrar direccion del cliente
-	 * System.out.println(clienteEncontrado.getDireccion()); // cambiar direccion
-	 * String respuesta =
-	 * Funciones.dimeString("¿Quieres cambiar la direccion de envio?)", sc); if
-	 * (respuesta == "si") { // pido nuevos System.out.println("Nueva dirección");
-	 * String nuevaDireccion = sc.nextLine();
-	 * clienteEncontrado.setDireccion(nuevaDireccion);
-	 * 
-	 * ClienteDAO.actualiza(clienteEncontrado, codigo,
-	 * clienteEncontrado.getNombre(), nuevaDireccion);
-	 * System.out.println("Datos actualizados");
-	 * System.out.println("El precio total del pedido es: " + pedido.getPrecio()); }
-	 * 
-	 * } // si existe return pedido;
-	 * 
-	 * }/*
-	 * 
-	 * /* 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
+	 /* 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
 	 * mostrando a continuación el nombre del cliente con ese código. Luego haremos
 	 * un bucle en el que vayamos pidiendo nombres de productos. Buscamos en la base
 	 * de datos si hay algún producto con ese nombre y si existe, pediremos cuántas
@@ -60,7 +36,28 @@ public class PedidosDAO {
 	 * pedido en la base de datos mostrando “Pedido guardado “, e indicaremos el
 	 * precio total.
 	 */
-
+	public static void insertar(Pedido pedido) {
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("INSERT INTO pedidos(idcliente,precioTotal, direccionEnvio, fecha) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			pst.setInt(1, pedido.getCliente().getIdcliente());
+			pst.setDouble(2, pedido.getPrecioTotal());
+			pst.setString(3, pedido.getDireccionEnvio());
+			pst.setDate(4, Funciones.convierteFecha(pedido.getFecha()));
+			pst.execute();
+			ResultSet rs = pst.getGeneratedKeys();
+			if(rs.next()) {
+				pedido.setIdPedido(rs.getInt(1));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {// O en el try abrir la conexion
+			Conexion.cierraConexion();
+		}
+	}
 	// FUNCION 2
 	public static List<Pedido> verPedidos() {
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
@@ -95,12 +92,20 @@ public class PedidosDAO {
 
 	}
 
+	public static void actualizaDirPrecio(Pedido pedido, String direccion, Double precio) {
+		try {
+			Connection con = Conexion.abreConexion();
+			PreparedStatement pst = con.prepareStatement("UPDATE pedidos set direccionEnvio = ?, precioTotal=? WHERE idpedido=?;");
+			pst.setString(1, direccion);
+			pst.setDouble(2, precio);
+			pst.setInt(3, pedido.getIdPedido());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {// O en el try abrir la conexion
+			Conexion.cierraConexion();
+		}
 	
-	
-		
-		
-		
-		
 	}
+}
 
 
