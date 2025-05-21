@@ -181,5 +181,34 @@ public class ProductoDAO {
 		}
 	}
 	
+	public static List<Producto> ProductosMasVendido() { // nunca scanner en los daos-> main
+		List<Producto> listaProductoMasVendido = new ArrayList<Producto>();
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select productos.nombre , SUM(pedidoproducto.unidades) as total_unidades\r\n"
+					+ "from pedidoproducto\r\n"
+					+ "join productos  on pedidoproducto.idproducto = productos.idproducto\r\n"
+					+ "inner join categoria c on productos.idcategoria = c.idcategoria\r\n"
+					+ "group by  pedidoproducto.idproducto having total_unidades = ( select MAX(unidades_totales)from (select SUM(unidades) as unidades_totales\r\n"
+					+ "from pedidoproducto group by idproducto) AS subconsulta);");
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString("nombre"));
+
+				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
+						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
+						rs.getString("talla"), rs.getInt("stock"));
+				listaProductoMasVendido.add(producto);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return listaProductoMasVendido;
+	}
 
 }

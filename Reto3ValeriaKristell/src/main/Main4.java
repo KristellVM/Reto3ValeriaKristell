@@ -35,8 +35,9 @@ public class Main4 {
 				Cliente cliente = ClienteDAO.buscar(cod);
 				if (cliente == null) {
 					System.out.println("El cliente no existe");
+				} else {
+					PedidosPorCliente(cliente);
 				}
-				PedidosPorCliente(cliente);
 				break;
 			case 3:
 				ProductosMasVendido();

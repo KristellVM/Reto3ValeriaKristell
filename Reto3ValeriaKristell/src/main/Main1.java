@@ -46,28 +46,28 @@ public class Main1 {
 		Categoria c = new Categoria(nombre);
 		CategoriaDAO.inserta(c);
 	}
-
+	public static Categoria estaCategoria(int idCategoria, List<Categoria> categorias) {
+		Categoria categoriaEncontrada=null;
+		for (Categoria categoria : categorias) {
+			if(categoria.getIdcategoria()==idCategoria) {
+				categoriaEncontrada = categoria;
+				return categoriaEncontrada;
+			}
+		}
+		return null;
+	}
 	public static void gestionProductos(Scanner sc) {
-		/*
-		 * Producto(Categoria categoria, String nombre, double precio, String
-		 * descripcion, String color, String talla, int stock)
-		 */
-		/*
-		 * String nombre = Funciones.dimeString("Introduce nombre: ", sc); double precio
-		 * = Funciones.dimeDouble("Introduce precio: ", sc); String desc =
-		 * Funciones.dimeString("Introduce descripci�n: ", sc); String color =
-		 * Funciones.dimeString("Introduce color: ", sc); String talla =
-		 * Funciones.dimeString("Introduce talla: ", sc); int stock =
-		 * Funciones.dimeEntero("Introduce stock: ", sc);
-		 */
 		List<Categoria> categorias = CategoriaDAO.lista();
 		for (Categoria categoria : categorias) {
 			System.out.println(categoria);
 		}
-		int idCategoria = -1;
+		
+		Categoria categoriaEncontrada = null;
+		int idCategoria;
 		do {
 			idCategoria = Funciones.dimeEntero("Selecciona idCategoria: ", sc);
-		} while (idCategoria < 0 || idCategoria >= categorias.size());
+			categoriaEncontrada = estaCategoria(idCategoria, categorias);
+		} while (categoriaEncontrada==null);
 
 		Producto p = new Producto(categorias.get(idCategoria - 1), Funciones.dimeString("Introduce nombre: ", sc),
 				Funciones.dimeDouble("Introduce precio: ", sc), Funciones.dimeString("Introduce descripci�n: ", sc),
@@ -100,7 +100,12 @@ public class Main1 {
 	}
 
 	public static void insertarCliente(Scanner sc) {
-		Cliente c = new Cliente(Funciones.dimeEntero("Introduce codigo: ", sc),
+		int codigo = 1;
+		do {
+			codigo = Funciones.dimeEntero("Introduce codigo: ", sc);
+		} while (ClienteDAO.buscar(codigo)!=null);
+		
+		Cliente c = new Cliente(codigo,
 				Funciones.dimeString("Introduce nombre: ", sc), Funciones.dimeString("Introduce direccion: ", sc));
 		ClienteDAO.inserta(c);
 	}
