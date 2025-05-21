@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import clases.Categoria;
 import clases.Cliente;
+import clases.Pedido;
 import util.Conexion;
 
 public class ClienteDAO {
@@ -69,5 +72,54 @@ public class ClienteDAO {
 				Conexion.cierraConexion();
 			}
 	}
+	
+	public static List<Pedido> PedidosPorCliente(Cliente cliente) {
+		List<Pedido> listaPedidos = new ArrayList<Pedido>();
+		// busco los pedidos de ese cliente
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select * from pedidos \r\n"
+					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n" + "where clientes.codigo=?;");
+			pst.setInt(1, cliente.getCodigo());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getDouble("precioTotal"),
+						rs.getString("direccionEnvio"), rs.getDate("fecha"));
+				listaPedidos.add(pedido);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return listaPedidos;
+	}
+	/*
+	 * public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
+		List<Pedido> listaPedidos = new ArrayList<Pedido>();
+		// busco los pedidos de ese cliente
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select * from pedidos \r\n"
+					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n" + "where clientes.codigo=?;");
+			pst.setInt(1, cliente.getCodigo());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getDouble("precioTotal"),
+						rs.getString("direccionEnvio"), rs.getDate("fecha"));
+				listaPedidos.add(pedido);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return listaPedidos;
+	}
+	 * */
 	
 }

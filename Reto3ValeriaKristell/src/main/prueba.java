@@ -63,8 +63,9 @@ public class prueba {
 		} else {
 			nuevaDir = clienteEncontrado.getDireccion();
 		}
-		PedidosDAO.actualizaDirPrecio(pedido, nuevaDir, PedidoProductoDAO.precioTotal(pedido.getIdPedido()));
-		System.out.println(pedido.getPrecioTotal());
+		double precioFinal = PedidoProductoDAO.precioTotal(pedido.getIdPedido());
+		PedidosDAO.actualizaDirPrecio(pedido, nuevaDir, precioFinal);
+		System.out.println("Pedido guardado. El precio final es: "+precioFinal);
 	}
 
 	public static void main(String[] args) {

@@ -2,6 +2,8 @@ package clases;
 
 import java.util.Date;
 
+import util.Funciones;
+
 public class Pedido {
 	private int idPedido;
 	private Cliente cliente;
@@ -65,7 +67,7 @@ public class Pedido {
 	@Override
 	public String toString() {
 		return "Pedido realizado por cliente: " + cliente.getNombre() + ", el precio total es: " + precioTotal
-				+ ", la direccion de envio es " + direccionEnvio + " en la fecha=" + fecha;
+				+ ", la direccion de envio es " + direccionEnvio + " en la fecha: " + fecha;
 	}
 	
 	

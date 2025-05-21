@@ -9,6 +9,7 @@ import java.util.List;
 
 import clases.Categoria;
 import clases.Cliente;
+import clases.Pedido;
 import clases.Producto;
 import util.Conexion;
 
@@ -187,17 +188,17 @@ public class ProductoDAO {
 			// abro conexion
 			Connection con = Conexion.abreConexion();
 			// creo select
-			PreparedStatement pst = con.prepareStatement("select productos.nombre , SUM(pedidoproducto.unidades) as total_unidades\r\n"
+			PreparedStatement pst = con.prepareStatement("select c.idcategoria, c.nombre, p.idProducto, p.nombre, p.precio,p.descripcion, p.color, p.talla, p.stock , SUM(pedidoproducto.unidades) as total_unidades\r\n"
 					+ "from pedidoproducto\r\n"
-					+ "join productos  on pedidoproducto.idproducto = productos.idproducto\r\n"
-					+ "inner join categoria c on productos.idcategoria = c.idcategoria\r\n"
+					+ "inner join productos p on pedidoproducto.idproducto = p.idproducto\r\n"
+					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
 					+ "group by  pedidoproducto.idproducto having total_unidades = ( select MAX(unidades_totales)from (select SUM(unidades) as unidades_totales\r\n"
 					+ "from pedidoproducto group by idproducto) AS subconsulta);");
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString("nombre"));
+				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString(2));
 
-				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
+				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString(4),
 						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
 						rs.getString("talla"), rs.getInt("stock"));
 				listaProductoMasVendido.add(producto);
@@ -209,6 +210,36 @@ public class ProductoDAO {
 			Conexion.cierraConexion();
 		}
 		return listaProductoMasVendido;
+	}
+	
+	public static List<Producto> productoPorPedido(Pedido pedido) {
+		List<Producto> lista = new ArrayList<Producto>();
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select  from productos p\r\n"
+					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
+					+ "inner join pedidoproducto pp on p.idproducto = pp.idproducto\r\n"
+					+ "inner join pedidos pe on pp.idpedido = pe.idpedido\r\n"
+					+ "where pe.idpedido=?;");
+			pst.setInt(1, pedido.getIdPedido());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString(2));
+
+				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString(4),
+						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
+						rs.getString("talla"), rs.getInt("stock"));
+				lista.add(producto);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return lista;
 	}
 
 }

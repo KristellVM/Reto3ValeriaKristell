@@ -20,22 +20,6 @@ import util.Funciones;
 
 public class PedidosDAO {
 
-	// FUNCION 1
-	 /* 3.1. Crear pedido: pediremos el código de un cliente hasta que exista,
-	 * mostrando a continuación el nombre del cliente con ese código. Luego haremos
-	 * un bucle en el que vayamos pidiendo nombres de productos. Buscamos en la base
-	 * de datos si hay algún producto con ese nombre y si existe, pediremos cuántas
-	 * unidades queremos de ese producto. Si hay suficiente stock lo añadiremos al
-	 * pedido. Si no hay stock suficiente se comprarán todos los que haya en stock.
-	 * Así hasta que terminemos de añadir productos (establecer cómo queréis que
-	 * termine, si al pedir el código introduce un -1, o nada, o lo que digáis). Una
-	 * vez que ya hemos seleccionado los productos a comprar, se mostrará la
-	 * dirección del cliente que habíamos seleccionado antes y preguntaremos si
-	 * usamos esa dirección como dirección de envío o no. Si nos dicen que no
-	 * pediremos la nueva y pondremos esa como dirección de envío. Guardaremos el
-	 * pedido en la base de datos mostrando “Pedido guardado “, e indicaremos el
-	 * precio total.
-	 */
 	public static void insertar(Pedido pedido) {
 		try {
 			// abro conexion
@@ -69,7 +53,7 @@ public class PedidosDAO {
 					"SELECT pe.idpedido,pe.precioTotal, pe.direccionEnvio, pe.fecha, cl.idcliente, cl.codigo, cl.nombre, cl.direccion\r\n"
 					+ "	from pedidos pe \r\n"
 					+ "	inner join clientes cl on pe.idcliente = cl.idcliente"
-					+ " where month(pe.fecha)= month(curdate());");
+					+ " where month(pe.fecha)= month(curdate()) order by pe.fecha desc;");
 			
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
@@ -96,12 +80,51 @@ public class PedidosDAO {
 			pst.setDouble(1, precio);
 			pst.setString(2, direccion);
 			pst.setInt(3, pedido.getIdPedido());
+			pst.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {// O en el try abrir la conexion
 			Conexion.cierraConexion();
 		}
 	
+	}
+	
+	public static void eliminarPedidoVacio(int idPedido) {
+		try {
+			Connection con = Conexion.abreConexion();
+			PreparedStatement pst = con.prepareStatement("DELETE from pedidos where idpedido=?");
+			pst.setInt(1, idPedido);
+			pst.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			Conexion.cierraConexion();
+		}
+	}
+	
+	public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
+		List<Pedido> listaPedidos = new ArrayList<Pedido>();
+		// busco los pedidos de ese cliente
+		try {
+			// abro conexion
+			Connection con = Conexion.abreConexion();
+			// creo select
+			PreparedStatement pst = con.prepareStatement("select * from pedidos \r\n"
+					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n" + "where clientes.codigo=?;");
+			pst.setInt(1, cliente.getCodigo());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getDouble("precioTotal"),
+						rs.getString("direccionEnvio"), rs.getDate("fecha"));
+				
+				listaPedidos.add(pedido);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cierraConexion();
+		}
+		return listaPedidos;
 	}
 }
 

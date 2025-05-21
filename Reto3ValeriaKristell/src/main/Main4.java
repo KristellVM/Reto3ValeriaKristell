@@ -24,7 +24,7 @@ public class Main4 {
 
 		do {
 			opcion = Funciones.dimeEntero(
-					"Elige una opcion:\n0-Salir\n1-GestionCategorias\n2-GestionProductos\n3-GestionClientes", sc);
+					"Elige una opcion:\n0-Salir\n1-Bajo Stock\n2-Pedidos por Cliente\n3-Productos mas vendidos", sc);
 
 			switch (opcion) {
 			case 1:
@@ -43,7 +43,7 @@ public class Main4 {
 				ProductosMasVendido();
 				break;
 			case 0:
-				System.out.println("Saliendo de mantenimientos");
+				System.out.println("Saliendo de informes");
 				break;
 			default:
 				System.out.println("Opcion no valida. Seleccionar otra vez");
@@ -73,6 +73,8 @@ public class Main4 {
 		}
 
 	}
+	
+	
 
 	public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
@@ -97,40 +99,12 @@ public class Main4 {
 		}
 		return listaPedidos;
 	}
-	// 4.3 Productos más vendido: mostraremos el producto del que se hayan comprado
-	// más unidades. Si hay
-	// empate se mostrarán todos los empatados.
 
-	public static List<Producto> ProductosMasVendido() { // nunca scanner en los daos-> main
-		List<Producto> listaProductoMasVendido = new ArrayList<Producto>();
-		// busco los pedidos de ese cliente
-		try {
-			// abro conexion
-			Connection con = Conexion.abreConexion();
-			// creo select
-			PreparedStatement pst = con.prepareStatement("\r\n"
-					+ "select productos.nombre, SUM(pedidoproducto.unidades) as total_unidades\r\n"
-					+ "from pedidoproducto \r\n"
-					+ "join productos  on pedidoproducto.idproducto = productos.idproducto\r\n"
-					+ "group by  pedidoproducto.idproducto\r\n" + "having total_unidades = (\r\n"
-					+ "select MAX(unidades_totales)\r\n" + "from (\r\n" + "select SUM(unidades) as unidades_totales\r\n"
-					+ "from pedidoproducto\r\n" + "group by idproducto\r\n" + ") AS subconsulta\r\n" + ");\r\n" + "");
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString("nombre"));
-
-				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
-						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
-						rs.getString("talla"), rs.getInt("stock"));
-				listaProductoMasVendido.add(producto);
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cierraConexion();
+	public static void ProductosMasVendido() {
+		List<Producto> productos = ProductoDAO.ProductosMasVendido();
+		for (Producto producto : productos) {
+			System.out.println("Categoria: "+producto.getCategoria().getNombre()+", nombre: "+producto.getNombre()+" , stock: "+producto.getStock());
 		}
-		return listaProductoMasVendido;
 	}
 
 }
