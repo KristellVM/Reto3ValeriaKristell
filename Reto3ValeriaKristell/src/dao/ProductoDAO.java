@@ -218,7 +218,7 @@ public class ProductoDAO {
 			// abro conexion
 			Connection con = Conexion.abreConexion();
 			// creo select
-			PreparedStatement pst = con.prepareStatement("select  from productos p\r\n"
+			PreparedStatement pst = con.prepareStatement("select c.idcategoria, c.nombre, p.idproducto, p.nombre, p.precio,p.descripcion, p.color, p.talla, p.stock from productos p\r\n"
 					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
 					+ "inner join pedidoproducto pp on p.idproducto = pp.idproducto\r\n"
 					+ "inner join pedidos pe on pp.idpedido = pe.idpedido\r\n"

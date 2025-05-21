@@ -12,6 +12,7 @@ import clases.Cliente;
 import clases.Pedido;
 import clases.Producto;
 import dao.ClienteDAO;
+import dao.PedidosDAO;
 import dao.ProductoDAO;
 import util.Conexion;
 import util.Funciones;
@@ -36,7 +37,7 @@ public class Main4 {
 				if (cliente == null) {
 					System.out.println("El cliente no existe");
 				} else {
-					PedidosPorCliente(cliente);
+					pedidosPorCliente(cliente);
 				}
 				break;
 			case 3:
@@ -74,31 +75,18 @@ public class Main4 {
 
 	}
 	
-	
-
-	public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
-		List<Pedido> listaPedidos = new ArrayList<Pedido>();
-		// busco los pedidos de ese cliente
-		try {
-			// abro conexion
-			Connection con = Conexion.abreConexion();
-			// creo select
-			PreparedStatement pst = con.prepareStatement("select * from pedidos \r\n"
-					+ "inner join clientes on clientes.idcliente=pedidos.idcliente\r\n" + "where clientes.codigo=?;");
-			pst.setInt(1, cliente.getCodigo());
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getDouble("precioTotal"),
-						rs.getString("direccionEnvio"), rs.getDate("fecha"));
-				listaPedidos.add(pedido);
+	public static void pedidosPorCliente(Cliente cliente) {
+		List<Pedido> pedidos = PedidosDAO.PedidosPorCliente(cliente);
+		for (Pedido pedido : pedidos) {
+			System.out.println("Pedido realizado en la fecha "+Funciones.convierte_Date_a_String(pedido.getFecha())+", el precio total es: "+pedido.getPrecioTotal()+" y la direccion de envio es: "+pedido.getDireccionEnvio());
+			List<Producto> productos = ProductoDAO.productoPorPedido(pedido);
+			for (Producto p : productos) {
+				System.out.println(p);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cierraConexion();
 		}
-		return listaPedidos;
 	}
+
+	
 
 	public static void ProductosMasVendido() {
 		List<Producto> productos = ProductoDAO.ProductosMasVendido();

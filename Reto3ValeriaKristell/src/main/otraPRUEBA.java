@@ -19,7 +19,7 @@ public class otraPRUEBA {
 		if (cliente == null) {
 			System.out.println("El cliente no existe");
 		}
-		List<Pedido> listaPedidos = Main4.PedidosPorCliente(cliente);
+		//List<Pedido> listaPedidos = Main4.PedidosPorCliente(cliente);
 
 	}
 }
