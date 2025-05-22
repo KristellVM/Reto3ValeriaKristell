@@ -27,21 +27,22 @@ public class Main {
 			
 			switch (opcion) {
 			case 1:
-				System.out.println("Entrando al menú de Mantenimiento");
+				System.out.println("Entrando al menu de Mantenimiento");
 				funcionMantenimiento(sc);
 				break;
 
 			case 2:
-				System.out.println("Entrando al menú catalogo productos");
+				System.out.println("Entrando al menu Catalogo productos");
 				funcionCatalogoProducto(sc);
 				break;
 
 			case 3:
-				System.out.println("Entrando al menú Pedidos");
+				System.out.println("Entrando al menu Pedidos");
 				funcionPedidos(sc);
 				break;
 
 			case 4:
+				System.out.println("Entrando al menu Informes");
 				funcionInformes(sc);				
 				break;
 
