@@ -132,10 +132,8 @@ public class Pedido {
 	
 	/**
 	 * Constructor con cliente y fecha
-	 * Crea un nuevo Pedido  con cliente,  precioTotal,  direccionEnvio y fecha específico pasado por parámetro
+	 * Crea un nuevo Pedido  con cliente,  y fecha específico pasado por parámetro
 	 * @param cliente Cliente
-	 * @param precioTotal double
-	 *  @param direccionEnvio String
 	 *    @param fecha Date
 	 *    
 	 * 
@@ -145,9 +143,19 @@ public class Pedido {
 		this.cliente = cliente;
 		this.fecha = fecha;
 	}
+	
+	/**
+	 * Obtiene la fecha del pedido
+	 * @return  la fecha del pedido
+	 */
 	public Date getFecha() {
 		return fecha;
 	}
+	/**
+	 * Establece la fecha del pedido
+	 * @param fecha la nueva fecha del pedido
+	 */
+	
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
