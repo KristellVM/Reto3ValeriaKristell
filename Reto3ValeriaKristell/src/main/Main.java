@@ -224,7 +224,7 @@ public class Main {
 			System.out.println("no se encontraron productos");
 		} else {
 			for (Producto producto : lista) {
-				System.out.println(producto.getCategoria().getNombre()+producto);
+				System.out.println(producto+", categoria: "+producto.getCategoria().getNombre());
 			}
 		}
 	}

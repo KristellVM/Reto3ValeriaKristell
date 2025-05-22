@@ -31,7 +31,7 @@ public class ProductoDAO {
 				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString(2));// int
 																										// idcategoria,
 																										// String nombre
-				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString("nombre"),
+				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString(4),
 						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
 						rs.getString("talla"), rs.getInt("stock"));
 
