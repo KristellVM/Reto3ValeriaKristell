@@ -40,7 +40,6 @@ public class Main {
 				System.out.println("Entrando al menu Pedidos");
 				funcionPedidos(sc);
 				break;
-
 			case 4:
 				System.out.println("Entrando al menu Informes");
 				funcionInformes(sc);				
