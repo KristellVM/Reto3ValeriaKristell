@@ -60,36 +60,6 @@ public class PedidoProductoDAO {
 			}
 		return 0;
 	}
-	
-	public static List<PedidoProducto> PorIdPedido(Pedido pedido) {
-		List<PedidoProducto> lista = new ArrayList<PedidoProducto>();
-		try {
-			// abro conexion
-			Connection con = Conexion.abreConexion();
-			// creo select
-			PreparedStatement pst = con.prepareStatement(
-					"SELECT c.idcategoria, c.nombre, p.idproducto,p.nombre, p.precio, p.descripcion, p.color, p.talla, p.stock, \r\n"
-					+ "	from pedidos pe \r\n"
-					+ "	inner join clientes cl on pe.idcliente = cl.idcliente"
-					+ " where month(pe.fecha)= month(curdate());");
-			
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				//Categoria c = new Categoria(rs.getInt("idCategoria"),rs.getString(2));
-				//Producto producto = new Producto(rs.getInt("idproducto"),c, rs.getString(4), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),rs.getString("talla"), rs.getInt("stock"));
-				//Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getInt("precioTotal"), rs.getString("direccionEnvio"), rs.getDate("fecha"));
-				//PedidoProducto pp = new PedidoProducto(rs.getInt("idpedidoproducto"),pedido, producto, rs.getInt("unidades"), producto.getPrecio());
-				//lista.add(pp);
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {// O en el try abrir la conexion
-			Conexion.cierraConexion();
-		}
-		return lista;
-		
-	}
 
 	public static List<PedidoProducto> listaPorPedido(Pedido pedido) {
 		List<PedidoProducto> lista = new ArrayList<PedidoProducto>();
@@ -118,36 +88,5 @@ public class PedidoProductoDAO {
 		}
 		return lista;
 	}
-	
-	
-	/*public static List<Integer> PorIdPedido(Pedido pedido) {
-		List<Integer> lista = new ArrayList<Integer>();
-		try {
-			// abro conexion
-			Connection con = Conexion.abreConexion();
-			// creo select
-			PreparedStatement pst = con.prepareStatement(
-					"SELECT idpedidoproducto"
-					+ "	from pedidos pe \r\n"
-					+ "	inner join clientes cl on pe.idcliente = cl.idcliente"
-					+ " where month(pe.fecha)= month(curdate());");
-			
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				//Categoria c = new Categoria(rs.getInt("idCategoria"),rs.getString(2));
-				//Producto producto = new Producto(rs.getInt("idproducto"),c, rs.getString(4), rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),rs.getString("talla"), rs.getInt("stock"));
-				//Pedido pedido = new Pedido(rs.getInt("idpedido"), cliente, rs.getInt("precioTotal"), rs.getString("direccionEnvio"), rs.getDate("fecha"));
-				//PedidoProducto pp = new PedidoProducto(rs.getInt("idpedidoproducto"),pedido, producto, rs.getInt("unidades"), producto.getPrecio());
-				//lista.add(pp);
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {// O en el try abrir la conexion
-			Conexion.cierraConexion();
-		}
-		return lista;
-		
-	}*/
 
 }

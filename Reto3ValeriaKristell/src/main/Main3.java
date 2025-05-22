@@ -103,7 +103,11 @@ public class Main3 {
 		List<Pedido> pedidosPorMes = PedidosDAO.verPedidos();
 		for (Pedido pedido : pedidosPorMes) {
 			System.out.println(pedido);
-			
+			List<PedidoProducto> lista = PedidoProductoDAO.listaPorPedido(pedido);
+			for (PedidoProducto p : lista) {
+				System.out.println(p);
+			}
+			System.out.println();
 		}
 	}
 

@@ -45,7 +45,11 @@ public class Main {
 				funcionInformes(sc);				
 				break;
 
+			case 0:
+				System.out.println("Saliendo del programa");
+				break;
 			default:
+				System.out.println("Opcion no valida");
 				break;
 			}
 		} while (opcion != 0);
@@ -297,6 +301,11 @@ public class Main {
 		List<Pedido> pedidosPorMes = PedidosDAO.verPedidos();
 		for (Pedido pedido : pedidosPorMes) {
 			System.out.println(pedido);
+			List<PedidoProducto> lista = PedidoProductoDAO.listaPorPedido(pedido);
+			for (PedidoProducto p : lista) {
+				System.out.println(p);
+			}
+			System.out.println();
 		}
 	}
 	
@@ -317,11 +326,11 @@ public class Main {
 				if (cliente == null) {
 					System.out.println("El cliente no existe");
 				} else {
-					//PedidosPorCliente(cliente);
+					pedidosPorCliente(cliente);
 				}
 				break;
 			case 3:
-				ProductoMasVendido();
+				productoMasVendido();
 				break;
 			case 0:
 				System.out.println("Saliendo de informes");
@@ -353,8 +362,24 @@ public class Main {
 		}
 	}
 	
+	public static void pedidosPorCliente(Cliente cliente) {
+		List<Pedido> pedidos = PedidosDAO.PedidosPorCliente(cliente);
+		if(pedidos.isEmpty()) {
+			System.out.println("Cliente "+cliente.getNombre()+" no tiene pedidos.");
+		} else {
+			System.out.println("Pedidos de "+cliente.getNombre());
+			for (Pedido pedido : pedidos) {
+				System.out.println("Pedido realizado en la fecha "+Funciones.convierte_Date_a_String(pedido.getFecha())+", el precio total es: "+pedido.getPrecioTotal()+" y la direccion de envio es: "+pedido.getDireccionEnvio());
+				List<PedidoProducto> lista = PedidoProductoDAO.listaPorPedido(pedido);
+				for (PedidoProducto p : lista) {
+					System.out.println(p);
+				}
+				System.out.println();
+			}
+		}
+	}
 
-	public static void ProductoMasVendido() {
+	public static void productoMasVendido() {
 		List<Producto> productos = ProductoDAO.ProductosMasVendido();
 		for (Producto producto : productos) {
 			System.out.println("Categoria: "+producto.getCategoria().getNombre()+", nombre: "+producto.getNombre()+" , stock: "+producto.getStock());

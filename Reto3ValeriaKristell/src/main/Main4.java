@@ -80,11 +80,16 @@ public class Main4 {
 
 	public static void pedidosPorCliente(Cliente cliente) {
 		List<Pedido> pedidos = PedidosDAO.PedidosPorCliente(cliente);
-		for (Pedido pedido : pedidos) {
-			System.out.println("Pedido realizado en la fecha "+Funciones.convierte_Date_a_String(pedido.getFecha())+", el precio total es: "+pedido.getPrecioTotal()+" y la direccion de envio es: "+pedido.getDireccionEnvio());
-			List<PedidoProducto> productos = PedidoProductoDAO.listaPorPedido(pedido);
-			for (PedidoProducto p : productos) {
-				System.out.println(p);
+		if(pedidos.isEmpty()) {
+			System.out.println("Cliente "+cliente.getNombre()+" no tiene pedidos.");
+		} else {
+			System.out.println("Pedidos de "+cliente.getNombre());
+			for (Pedido pedido : pedidos) {
+				System.out.println("Pedido realizado en la fecha "+Funciones.convierte_Date_a_String(pedido.getFecha())+", el precio total es: "+pedido.getPrecioTotal()+" y la direccion de envio es: "+pedido.getDireccionEnvio());
+				List<PedidoProducto> lista = PedidoProductoDAO.listaPorPedido(pedido);
+				for (PedidoProducto p : lista) {
+					System.out.println(p);
+				}
 			}
 		}
 	}
