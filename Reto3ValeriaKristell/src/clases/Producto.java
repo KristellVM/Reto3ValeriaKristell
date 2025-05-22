@@ -10,7 +10,24 @@ public class Producto {
 	private String talla;
 	private int stock;
 
-	public Producto(int idProducto, Categoria categoria, String nombre, double precio, String descripcion, String color,
+	/**
+	 * Constructor con parámetro  idProducto,  categoria,  nombre,  precio,  descripcion,  color,
+			 talla,  stock
+	 *  Crea un nuevo Producto  con idProducto,  categoria,  nombre,  precio,  descripcion,  color,
+			 talla,  stockpasado por parámetro
+			 
+	 * @param idProducto int
+	 * @param categoria Categoria
+	 *  @param nombre String
+	 *   @param precio double
+	 *     @param descripcion String
+	 *    @param color String
+	 *     @param talla String 
+	 *     @param stock int
+	 * 
+	 */
+	public Producto(int idProducto, Categoria categoria, String nombre, double precio, String descripcion,
+			String color,
 			String talla, int stock) {
 		super();
 		this.idProducto = idProducto;
@@ -22,6 +39,22 @@ public class Producto {
 		this.talla = talla;
 		this.stock = stock;
 	}
+	
+	/**
+	 * Constructor con parámetro   categoria,  nombre,  precio,  descripcion,  color,
+			 talla,  stock
+	 *  Crea un nuevo Producto  con idProducto,  categoria,  nombre,  precio,  descripcion,  color,
+			 talla,  stockpasado por parámetro
+			 
+	 * @param categoria Categoria
+	 *  @param nombre String
+	 *   @param precio double
+	 *     @param descripcion String
+	 *    @param color String
+	 *     @param talla String 
+	 *     @param stock int
+	 * 
+	 */
 	public Producto(Categoria categoria, String nombre, double precio, String descripcion, String color,
 			String talla, int stock) {
 		super();
