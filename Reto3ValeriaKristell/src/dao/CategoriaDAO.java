@@ -11,6 +11,7 @@ import clases.Categoria;
 import util.Conexion;
 
 public class CategoriaDAO {
+
 	public static void inserta(Categoria categoria) {
 		try {
 			//abro conexion
@@ -30,6 +31,10 @@ public class CategoriaDAO {
 				Conexion.cierraConexion();
 			}
 	}
+	/*
+* Este metodo se usa para devolver una lista de categorías 
+* @return int Este metodo devuelve la lista encontrada de categorias 
+*/
 	
 	public static List<Categoria> lista() {
 		List<Categoria> lista = new ArrayList<Categoria>();

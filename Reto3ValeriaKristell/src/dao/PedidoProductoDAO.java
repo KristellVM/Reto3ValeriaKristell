@@ -16,6 +16,7 @@ import util.Conexion;
 
 public class PedidoProductoDAO {
 	
+	
 	public static void insertar(PedidoProducto pedidoProducto) {
 		try {
 			//abro conexion
@@ -38,7 +39,12 @@ public class PedidoProductoDAO {
 				Conexion.cierraConexion();
 			}
 	}
-	
+	/**
+	* Este metodo se usa para calcular el precio total de un pedido pasado  
+	*
+	* @param idpedido Este es el primer parametro para calcular el coste total del pedido pasado
+	* @return double Este metodo devuelve el precfio totakl el pedido pasado
+	*/
 	public static double precioTotal(int idpedido) {
 		double precioTotal = 0;
 		try {
@@ -60,6 +66,7 @@ public class PedidoProductoDAO {
 			}
 		return 0;
 	}
+
 
 	public static List<PedidoProducto> listaPorPedido(Pedido pedido) {
 		List<PedidoProducto> lista = new ArrayList<PedidoProducto>();

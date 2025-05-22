@@ -13,6 +13,8 @@ import clases.Pedido;
 import util.Conexion;
 
 public class ClienteDAO {
+	
+	
 	public static void inserta(Cliente cliente) {
 		try {
 			//abro conexion
@@ -35,6 +37,13 @@ public class ClienteDAO {
 			}
 	}
 	
+	/**
+	* Este metodo se usa para encontrar un cliente mediante el parametro codigo
+	*
+	* @param codigo Este es el primer parametro para encontrar el cliente
+	* @return Cliente Este metodo devuelve el cliente encontrado que tiene el codigo 
+	* pasado por parámetro 
+	*/
 	public static Cliente buscar(int codigo) {
 		Cliente c = null;
 		try {
@@ -73,6 +82,12 @@ public class ClienteDAO {
 			}
 	}
 	
+	/**
+	* Este metodo se usa para devolver yuna lista de pedidos del cliente pasado por parametro
+	*
+	* @param cliente Este es el primer parametro para devolver una lista de pedidos de ese cliente  
+	* @return List<Pedido> Este metodo devuelve lña lsita de pedidos del cliente pasado 
+	*/
 	public static List<Pedido> PedidosPorCliente(Cliente cliente) {
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
 		// busco los pedidos de ese cliente

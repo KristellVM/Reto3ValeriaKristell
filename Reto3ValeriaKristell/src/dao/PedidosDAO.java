@@ -43,6 +43,12 @@ public class PedidosDAO {
 		}
 	}
 	// FUNCION 2
+	
+	/**
+	* Este metodo se usa para listar todos los pedidos que hay
+	*
+	* @return  List<Pedido> Este metodo devuelve una lista con todos los pedidos que hay 
+	*/
 	public static List<Pedido> verPedidos() {
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
 		try {
@@ -102,6 +108,13 @@ public class PedidosDAO {
 		}
 	}
 	
+	
+	/**
+	* Este metodo se usa para listyar los pedido por cliente 
+	*
+	* @param cliente Este es el primer parametro para  listar los pedidos
+	* @return Cliente Este metodo devuelve una lista copn los pedidos del cliente pasado por parametro 
+	*/
 	public static List<Pedido> PedidosPorCliente(Cliente cliente) { // nunca scanner en los daos-> main
 		List<Pedido> listaPedidos = new ArrayList<Pedido>();
 		// busco los pedidos de ese cliente

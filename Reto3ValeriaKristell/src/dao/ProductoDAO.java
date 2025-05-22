@@ -47,6 +47,14 @@ public class ProductoDAO {
 	}
 
 	// FUNCION 2
+	/**
+	* Este metodo se usa para encontrar  productos por su nombre,talla,color
+	*
+	* @param nombre Este es el primer parametro para encontrar los productos
+	* @param talla Este es el segundo parametro para encontrar los productos
+	* @param color Este es el tercer parametro para encontrar los productos
+	* @return List<Producto> Este metodo devuelve una lista de productos, con ese nombre, tyalla y color pasados por parametros
+	*/
 	public static List<Producto> BuscarProducto(String nombre, String talla, String color ) {
 		List<Producto> listaProductos = new ArrayList<Producto>();
 	
@@ -81,7 +89,12 @@ public class ProductoDAO {
 		return listaProductos;
 	}
 
-	
+	/**
+	* Este metodo se usa para encontrar un producto por su nombre 
+	*
+	* @param nombre Este es el primer parametro para encontrar el producto
+	* @return Producto Este metodo devuelve el  producto encontrado por su nombre 
+	*/
 	//FUNCION 3 -> BUCAR PRODUCTO X NOMBRE
 	public static Producto BuscarProductonombre(String nombre) {
 		Producto producto = null;
