@@ -120,15 +120,14 @@ public class Main {
 		int opcion;
 
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion:\n0-Salir\n1-Buscar por codigo\n2-Dar alta a nuevo cliente",
+			opcion = Funciones.dimeEntero("Elige una opcion:\n0-Salir\n1-Dar alta a nuevo cliente\n2-Buscar por codigo",
 					sc);
 			switch (opcion) {
 			case 1:
-				busquedaPorCodigo(sc);
-				break;
-
-			case 2:
 				insertarCliente(sc);
+				break;
+			case 2:
+				busquedaPorCodigo(sc);
 				break;
 			case 0:
 				System.out.println("Saliendo de gestion clientes");

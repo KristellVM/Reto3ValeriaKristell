@@ -224,35 +224,5 @@ public class ProductoDAO {
 		}
 		return listaProductoMasVendido;
 	}
-	
-	public static List<Producto> productoPorPedido(Pedido pedido) {
-		List<Producto> lista = new ArrayList<Producto>();
-		try {
-			// abro conexion
-			Connection con = Conexion.abreConexion();
-			// creo select
-			PreparedStatement pst = con.prepareStatement("select c.idcategoria, c.nombre, p.idproducto, p.nombre, p.precio,p.descripcion, p.color, p.talla, p.stock from productos p\r\n"
-					+ "inner join categorias c on p.idcategoria = c.idcategoria\r\n"
-					+ "inner join pedidoproducto pp on p.idproducto = pp.idproducto\r\n"
-					+ "inner join pedidos pe on pp.idpedido = pe.idpedido\r\n"
-					+ "where pe.idpedido=?;");
-			pst.setInt(1, pedido.getIdPedido());
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				Categoria categoria = new Categoria(rs.getInt("idcategoria"), rs.getString(2));
-
-				Producto producto = new Producto(rs.getInt("idProducto"), categoria, rs.getString(4),
-						rs.getDouble("precio"), rs.getString("descripcion"), rs.getString("color"),
-						rs.getString("talla"), rs.getInt("stock"));
-				lista.add(producto);
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cierraConexion();
-		}
-		return lista;
-	}
 
 }

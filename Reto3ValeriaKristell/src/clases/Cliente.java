@@ -131,7 +131,7 @@ public Cliente(int codigo, String nombre, String direccion) {
 }
 @Override
 public String toString() {
-	return "idcliente=" + idcliente + ", codigo=" + codigo + ", nombre=" + nombre + ", direccion=" + direccion
+	return "idcliente: " + idcliente + ", codigo: " + codigo + ", nombre: " + nombre + ", direccion: " + direccion
 			;
 }
 
