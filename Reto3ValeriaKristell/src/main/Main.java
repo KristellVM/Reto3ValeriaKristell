@@ -131,9 +131,9 @@ public class Main {
 				insertarCliente(sc);
 				break;
 			case 0:
-				System.out.println("Saliendo de gesti�n clientes");
+				System.out.println("Saliendo de gestion clientes");
 			default:
-				System.out.println("Opci�n inv�lida. Seleccionar otra vez");
+				System.out.println("Opcion no valida. Seleccionar otra vez");
 				break;
 			}
 		} while (opcion != 0);
@@ -154,9 +154,12 @@ public class Main {
 		int codigo = Funciones.dimeEntero("Introduce codigo de cliente: ", sc);
 		Cliente cliente1 = ClienteDAO.buscar(codigo);
 		if (cliente1 != null) {
-			cliente1.toString();
+			System.out.println(cliente1.toString());
 			System.out.println("Datos nuevos: ");
-			int nuevoCodigo = Funciones.dimeEntero("Introduce codigo: ", sc);
+			int nuevoCodigo = 1;
+			do {
+				nuevoCodigo = Funciones.dimeEntero("Introduce codigo: ", sc);
+			} while (ClienteDAO.buscar(nuevoCodigo)!=null);
 			String nombre = Funciones.dimeString("Introduce nombre: ", sc);
 			String direccion = Funciones.dimeString("Introduce direccion: ", sc);
 			ClienteDAO.actualiza(cliente1, nuevoCodigo, nombre, direccion);
@@ -169,7 +172,7 @@ public class Main {
 		int opcion;
 		
 		do {
-			opcion = Funciones.dimeEntero("Elige una opcion: 0-Salir\n1-Listar Productos Por Categoria:\n2-Buscar productos", sc);
+			opcion = Funciones.dimeEntero("Elige una opcion:\n0-Salir\n1-Listar Productos Por Categoria:\n2-Buscar productos", sc);
 			switch (opcion) {
 			case 1:
 				ProductosPorCategoria(sc);
@@ -192,8 +195,16 @@ public class Main {
 		List<Categoria> categorias = CategoriaDAO.lista();
 		for (Categoria categoria : categorias) {
 			System.out.println(categoria);
-		}
-		int idCategoria = Funciones.dimeEntero("Selecciona idCategoria", sc);
+		}		
+		Categoria categoriaEncontrada = null;
+		int idCategoria;
+		do {
+			idCategoria = Funciones.dimeEntero("Selecciona idCategoria: ", sc);
+			categoriaEncontrada = estaCategoria(idCategoria, categorias);
+			if(categoriaEncontrada==null) {
+				System.out.println("No existe una categoria con ese id");
+			}
+		} while (categoriaEncontrada==null);
 		
 		List<Producto> listaProductos = ProductoDAO.FuncionListaProductos(idCategoria);
 		for (Producto producto : listaProductos) {
