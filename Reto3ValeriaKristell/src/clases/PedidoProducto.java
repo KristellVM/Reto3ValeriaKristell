@@ -86,8 +86,8 @@ CREATE TABLE pedidoproducto (
 
 	@Override
 	public String toString() {
-		return "PedidoProducto [idPedidoProducto=" + idPedidoProducto + ", pedido=" + pedido + ", producto=" + producto
-				+ ", unidades=" + unidades + ", precio=" + precio;
+		return "Producto: " + producto.getNombre()+", categoria: "+producto.getCategoria().getNombre()
+				+ ", unidades compradas: " + unidades + " y precio: " + precio;
 	}
 
 }

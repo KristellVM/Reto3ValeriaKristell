@@ -10,8 +10,10 @@ import java.util.Scanner;
 import clases.Categoria;
 import clases.Cliente;
 import clases.Pedido;
+import clases.PedidoProducto;
 import clases.Producto;
 import dao.ClienteDAO;
+import dao.PedidoProductoDAO;
 import dao.PedidosDAO;
 import dao.ProductoDAO;
 import util.Conexion;
@@ -75,18 +77,17 @@ public class Main4 {
 
 	}
 	
+
 	public static void pedidosPorCliente(Cliente cliente) {
 		List<Pedido> pedidos = PedidosDAO.PedidosPorCliente(cliente);
 		for (Pedido pedido : pedidos) {
 			System.out.println("Pedido realizado en la fecha "+Funciones.convierte_Date_a_String(pedido.getFecha())+", el precio total es: "+pedido.getPrecioTotal()+" y la direccion de envio es: "+pedido.getDireccionEnvio());
-			List<Producto> productos = ProductoDAO.productoPorPedido(pedido);
-			for (Producto p : productos) {
+			List<PedidoProducto> productos = PedidoProductoDAO.listaPorPedido(pedido);
+			for (PedidoProducto p : productos) {
 				System.out.println(p);
 			}
 		}
 	}
-
-	
 
 	public static void ProductosMasVendido() {
 		List<Producto> productos = ProductoDAO.ProductosMasVendido();
